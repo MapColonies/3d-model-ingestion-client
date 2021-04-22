@@ -1,0 +1,41 @@
+span.buttonCopy{
+  padding: 0.2em 0.5em;
+  margin: 0 0.1em 0.1em 0.1em;
+  border: 0.01em solid rgba(255,255,255,0);
+  border-radius: 0.3em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 300;
+  color: #FFFFFF;
+  text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+  text-align: center;
+  transition: all 0.2s;
+}
+span.buttonCopy:hover{
+  border-color: rgba(255,255,255,1);
+}
+@media all and (max-width:30em){
+  span.buttonCopy{
+  display:block;
+  margin:0.2em auto;
+  }
+}
+
+.copyIndicator{
+  font-size: 10px;
+  height: 10px;
+  position: absolute;
+  line-height: 6px;
+  margin: 0 30%;
+}
+
+input.linkControl{
+  width: 100px;
+  text-overflow: ellipsis;
+  height: 24px;
+  position: relative;
+  top: -1px;
+}
+input.linkControl:focus {
+  outline: unset;
+}

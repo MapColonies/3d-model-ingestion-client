@@ -1,0 +1,44 @@
+var MAP_SERVER = '{{ getv "/configuration/mapserver/url" "http://10.28.11.95:8080" }}';
+window._env_ = {
+  LANGUAGE: '{{ getv "/configuration/ui/language" "en" }}',
+  MAP_SERVER: MAP_SERVER,
+  PUBLISH_POINT: '{{ getv "/configuration/mapserver/publish/point" "blue_m_flat2d-v001" }}',
+  CHANNEL: '{{ getv "/configuration/mapserver/channel" "1002" }}',
+  VERSION: '{{ getv "/configuration/mapserver/version" "1" }}',
+  REQUEST: '{{ getv "/configuration/mapserver/request" "ImageryMaps" }}',
+  SERVICE_PROTOCOL: '{{ getv "/configuration/service/protocol" "http://" }}',
+  SERVICE_NAME: '{{ getv "/configuration/service/url" "localhost:8000" }}',
+  ACTIVE_LAYER: '{{ getv "/configuration/active/layer" "OSM_DEFAULT" }}',
+  ACTIVE_LAYER_PROPERTIES: {
+    urlPattern : MAP_SERVER + '{{ getv "/configuration/active/layer/properties/mapurlpath" "/service" }}',
+    exportUrlPattern: MAP_SERVER + '{{ getv "/configuration/active/layer/properties/exportpath" "/service?REQUEST=GetMap&SERVICE=WMS&LAYERS=combined_layers" }}',
+    urlPatternParams: {
+      service: '{{ getv "/configuration/active/layer/properties/url/pattern/params/service" "WMS" }}',
+      layers: '{{ getv "/configuration/active/layer/properties/url/pattern/params/layers" "combined_layers" }}',
+      tiled: '{{ getv "/configuration/active/layer/properties/url/pattern/params/tiled" "true" }}',
+      matrixSet: '{{ getv "/configuration/active/layer/properties/url/pattern/params/matrixset" "gridname" }}',
+      style: '{{ getv "/configuration/active/layer/properties/url/pattern/params/style" "default" }}',
+      projection: '{{ getv "/configuration/active/layer/properties/url/pattern/params/projection" "EPSG:4326" }}'
+    }
+  },
+  EXPORT: {
+    defaultZoomLevel: {{ getv "/configuration/export/default/zoom/level" "18" }},
+    maxZoomLevel: {{ getv "/configuration/export/max/zoom/level" "22" }},
+  },
+  MAP: {
+    center: {{ getv "/configuration/map/center" "[35.14, 31.39]" }},
+    zoom: {{ getv "/configuration/map/zoom" "8" }},
+  },
+  LOGGER: {
+    level: '{{ getv "/configuration/logger/level" "warn" }}',
+    log2console: {{ getv "/configuration/logger/log2console" "false" }},
+    log2httpServer: {
+      host: '{{ getv "/configuration/logger/http/host" "" }}',
+      port: '{{ getv "/configuration/logger/http/port" "" }}',
+      path: '{{ getv "/configuration/logger/http/path" "" }}'
+    }
+  },
+  BBOX: {
+    "limit": {{ getv "/configuration/bbox/area/square/km/limit" "10000" }}
+  }
+};

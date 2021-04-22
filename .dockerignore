@@ -1,0 +1,17 @@
+git
+.vscode
+.idea
+
+*Dockerfile*
+*docker-compose*
+
+dist
+build
+coverage
+node_modules
+config
+jest_html_reporters.html
+package-lock.json
+
+*.md
+*.log

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AgGrid CopyToClipboardRenderer component renders correctly 1`] = `
+<Fragment>
+  <input
+    className="linkControl"
+    tabIndex={-1}
+    value="./test/folder/file.gpkg"
+  />
+  <CopyToClipboard
+    onCopy={[Function]}
+    text="./test/folder/file.gpkg"
+  >
+    <span
+      className="buttonCopy"
+      style={
+        Object {
+          "backgroundColor": "#2979ff",
+        }
+      }
+    >
+      <FormattedMessage
+        id="export-table.copy.text"
+      />
+    </span>
+  </CopyToClipboard>
+</Fragment>
+`;
