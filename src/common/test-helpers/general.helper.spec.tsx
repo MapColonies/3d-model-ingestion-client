@@ -36,7 +36,6 @@ export const asyncRender: asyncRenderModel = async (renderMethod, component) => 
 //         <ExportDialog
 //           isOpen={true}
 //           onSetOpen={setOpenFn}
-//           selectedPolygon={polygon}
 //           handleExport={handleExport}
 //         />
 //       </IntlProvider>

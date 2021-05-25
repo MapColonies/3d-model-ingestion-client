@@ -2,18 +2,17 @@ import { Method } from 'axios';
 import { types, Instance, getEnv } from 'mobx-state-tree';
 import { useContext, createContext } from 'react';
 import { ResponseState } from '../../common/models/ResponseState';
-import { exporterStore, ExporterResponse } from './exporterStore';
+import { loaderStore, LoaderResponse } from './loaderStore';
 
 type FetchAction = (
   url: string,
   method: Method,
-  params: Record<string, unknown>,
-  baseURL: string
-) => Promise<ExporterResponse>;
+  params: Record<string, unknown>
+) => Promise<LoaderResponse>;
 
-export const baseRootStore = types
+export const baseRootLoaderStore = types
   .model({
-    exporterStore: types.optional(exporterStore, {
+    loaderStore: types.optional(loaderStore, {
       state: ResponseState.IDLE,
       searchParams: {},
       errors: [],
@@ -26,15 +25,15 @@ export const baseRootStore = types
     },
   }));
 
-export const rootStore = baseRootStore;
-export interface IBaseRootStore extends Instance<typeof baseRootStore> {}
-export interface IRootStore extends Instance<typeof rootStore> {}
-const rootStoreContext = createContext<null | IRootStore | IBaseRootStore>(
+export const rootLoaderStore = baseRootLoaderStore;
+export interface IBaseRootLoaderStore extends Instance<typeof baseRootLoaderStore> {}
+export interface IRootLoaderStore extends Instance<typeof rootLoaderStore> {}
+const rootStoreContext = createContext<null | IRootLoaderStore | IBaseRootLoaderStore>(
   null
 );
 
 export const StoreProvider = rootStoreContext.Provider;
-export const useStore = (): IRootStore | IBaseRootStore => {
+export const useStore = (): IRootLoaderStore | IBaseRootLoaderStore => {
   const store = useContext(rootStoreContext);
   if (store === null) {
     throw new Error('Store cannot be null, please add a context provider');

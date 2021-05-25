@@ -15,13 +15,13 @@ import './index.css';
 const store = rootStore.create(
   {},
   {
-    fetch: async (url: string, method: Method, params: Record<string, unknown>) => {
+    fetch: async (baseURL: string, url: string, method: Method, params: Record<string, unknown>) => {
       const errorMsg = 'CLIENT HTTP ERROR BY AXIOS';
       return Axios.request({
         url, 
         method, 
         data: params,
-        baseURL: `${(EXPORTER_CONFIG.SERVICE_PROTOCOL as string)}${(EXPORTER_CONFIG.SERVICE_NAME as string)}` 
+        baseURL 
       })
       .then((res) => res.data as ExporterResponse)
       .catch ((error) => {

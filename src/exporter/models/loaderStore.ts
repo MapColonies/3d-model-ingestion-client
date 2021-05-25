@@ -1,19 +1,15 @@
 /* eslint-disable camelcase */
-import { types, Instance, flow, getParent, getSnapshot } from 'mobx-state-tree';
-import { Polygon } from '@turf/helpers';
+import { types, Instance, flow, getParent } from 'mobx-state-tree';
 import { AxiosRequestConfig, AxiosError } from 'axios';
 import { ApiHttpResponse } from '../../common/models/api-response';
 import { ResponseState } from '../../common/models/ResponseState';
-import { ExportStoreError } from '../../common/models/exportStoreError';
-import { getExportLayerUrl } from '../../common/helpers/layer-url';
-import EXPORTER_CONFIG from '../../common/config';
-// import MOCK_EXPORTED_PACKAGES from '../../__mocks-data__/exportedPackages';
+import { LoaderStoreError } from '../../common/models/loaderStoreError';
 import { searchParams } from './search-params';
-import { IRootStore } from './rootStore';
-import { IExportTaskStatus } from './exportTaskStatus';
+import { IRootLoaderStore } from './rootLoaderStore';
+import { ILoadModelStatus } from './loadModelStatus';
 
-export type ExportTaskStatusResponse = IExportTaskStatus[];
-export interface ExportResult {
+export type LoadModelStatusResponse = ILoadModelStatus[];
+export interface LoadResult {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 }
@@ -24,54 +20,48 @@ export interface ModelInfo {
   identifier: string;
 }
 
-export type ExporterResponse = ApiHttpResponse<ExportResult>;
+export type LoaderResponse = ApiHttpResponse<LoadResult>;
 
 const internalError = types.model({
   request: types.maybe(types.frozen<AxiosRequestConfig>()),
-  key: types.frozen<ExportStoreError>(),
+  key: types.frozen<LoaderStoreError>(),
 });
 export interface IInternalError extends Instance<typeof internalError> {}
 
-export const exporterStore = types
+export const loaderStore = types
   .model({
     state: types.enumeration<ResponseState>(
       'State',
       Object.values(ResponseState)
     ),
     searchParams: types.optional(searchParams, {}),
-    exportedPackages: types.maybe(types.frozen<any>([])),
+    models: types.maybe(types.frozen<any>([])),
     errors: types.frozen<IInternalError[]>([]),
   })
   .views((self) => ({
-    get root(): IRootStore {
+    get root(): IRootLoaderStore {
       return getParent(self);
     },
   }))
   .actions((self) => {
-    const startExportGeoPackage: (
+    const startLoadModel: (
       modelInfo: ModelInfo
-    ) => Promise<void> = flow(function* startExportGeoPackage(
+    ) => Promise<void> = flow(function* startLoadModel(
       modelInfo: ModelInfo
-    ): Generator<Promise<ExporterResponse>, void, ExporterResponse> {
+    ): Generator<Promise<LoaderResponse>, void, LoaderResponse> {
       self.state = ResponseState.PENDING;
-      const snapshot = getSnapshot(self.searchParams);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const params: Record<string, unknown> = {};
-      // Get the source layer name
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const sourceLayer: string = EXPORTER_CONFIG.ACTIVE_LAYER_PROPERTIES.urlPatternParams.layers as string;
       // Prepare body data for request
       params.modelPath = modelInfo.modelPath;
       params.tilesetFilename = modelInfo.tilesetFilename;
       params.identifier = modelInfo.identifier;
-      params.exportedLayers = [{ exportType: 'raster', url: getExportLayerUrl(), sourceLayer: sourceLayer }];
 
       try {
         const result = yield self.root.fetch(
           '/models',
           'POST',
-          params,
-          'http://localhost:8082'
+          params
         );
         // const responseBody = result.data.data;
         self.state = ResponseState.DONE;
@@ -79,44 +69,39 @@ export const exporterStore = types
         const error = e as AxiosError;
         // eslint-disable-next-line
         if (error) {
-          if (
-            error.response &&
-            error.response.data &&
-            // eslint-disable-next-line
-            error.response.data.name
-          ) {
+          // eslint-disable-next-line
+          if (error.response && error.response.data && error.response.data.name) {
             addError({
               request: error.config,
               // eslint-disable-next-line
-              key: error.response.data.name as ExportStoreError,
+              key: error.response.data.name as LoaderStoreError,
             });
           } else {
             addError({
               request: error.config,
-              key: ExportStoreError.GENERAL_ERROR,
+              key: LoaderStoreError.GENERAL_ERROR,
             });
           }
         }
         self.state = ResponseState.ERROR;
       }
     });
-    const getGeoPackages: () => Promise<void> = flow(
-      function* getGeoPackages(): Generator<
-        Promise<ExporterResponse>,
+    const getModels: () => Promise<void> = flow(
+      function* getModels(): Generator<
+        Promise<LoaderResponse>,
         void,
-        ExportTaskStatusResponse
+        LoadModelStatusResponse
       > {
         try {
           self.state = ResponseState.IDLE;
-          const result = yield self.root.fetch('/jobs', 'GET', {}, 'http://localhost:8081');
-          // const result = yield Promise.resolve(MOCK_EXPORTED_PACKAGES);
-          self.exportedPackages = result;
+          const result = yield self.root.fetch('/jobs', 'GET', {});
+          self.models = result;
         } catch (e) {
           const error = e as AxiosError;
           self.state = ResponseState.ERROR;
           addError({
             request: error.config,
-            key: ExportStoreError.GENERAL_ERROR,
+            key: LoaderStoreError.GENERAL_ERROR,
           });
         }
       }
@@ -126,7 +111,7 @@ export const exporterStore = types
       self.errors = [...self.errors, error];
     };
 
-    const hasError = (key: ExportStoreError): boolean => {
+    const hasError = (key: LoaderStoreError): boolean => {
       return Boolean(self.errors.find((err) => err.key === key));
     };
 
@@ -135,7 +120,7 @@ export const exporterStore = types
       return self.errors.length > minimalLength;
     };
 
-    const cleanError = (key: ExportStoreError): boolean => {
+    const cleanError = (key: LoaderStoreError): boolean => {
       if (hasError(key)) {
         self.errors = self.errors.filter((err) => err.key !== key);
         return true;
@@ -148,8 +133,8 @@ export const exporterStore = types
     };
 
     return {
-      startExportGeoPackage,
-      getGeoPackages,
+      startLoadModel,
+      getModels,
       addError,
       hasError,
       hasErrors,
@@ -158,4 +143,4 @@ export const exporterStore = types
     };
   });
 
-export interface IConflictsStore extends Instance<typeof exporterStore> {}
+export interface IConflictsLoaderStore extends Instance<typeof loaderStore> {}

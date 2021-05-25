@@ -39,14 +39,6 @@ export const MapContainer: React.FC<MapContainerProps> = (
     <div className="map">
       <div className="filtersPosition">
         <div className="filtersContainer">
-          <PolygonSelectionUi
-            onCancelDraw={(): void => setDrawType(undefined)}
-            onReset={onReset}
-            onStartDraw={setDrawType}
-            isSelectionEnabled={drawType !== undefined}
-            isDrawDisabled={props.isDrawDisabled}
-            onPolygonUpdate={onPolygonSelection}
-          />
           {props.filters?.map((filter, index) => (
             <div key={index} className="filtersMargin">
               {filter}

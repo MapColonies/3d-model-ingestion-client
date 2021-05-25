@@ -34,9 +34,9 @@ describe('Exporter Store', () => {
     });
 
     await exporterStore.startExportGeoPackage({
-      directoryName: 'kuku',
-      packName: 'kuku',
-      sizeEst: 20000,
+      modelPath: 'kuku',
+      tilesetFilename: 'kuku',
+      identifier: 'a4277d1c-a656-48d9-ad60-5df0de1ed77f',
     });
 
     expect(exporterStore.state).toBe(ResponseState.DONE);
@@ -56,9 +56,9 @@ describe('Exporter Store', () => {
     });
 
     await exporterStore.startExportGeoPackage({
-      directoryName: 'kuku',
-      packName: 'kuku',
-      sizeEst: 20000,
+      modelPath: 'kuku',
+      tilesetFilename: 'kuku',
+      identifier: 'a4277d1c-a656-48d9-ad60-5df0de1ed77f',
     });
 
     expect(exporterStore.state).toBe(ResponseState.ERROR);

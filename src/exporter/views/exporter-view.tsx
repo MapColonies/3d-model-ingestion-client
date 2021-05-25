@@ -18,7 +18,7 @@ import { MapContainer } from '../components/map-container';
 import EXPORTER_CONFIG from '../../common/config';
 import { ExportDialog } from '../components/export/export-dialog';
 import { ResponseState } from '../../common/models/ResponseState';
-import { ExportSatusTableDialog } from '../components/export-table/export-table-dialog';
+import { ExportStatusDialog } from '../components/export-table/export-status-dialog';
 import { ExportStoreError } from '../../common/models/exportStoreError';
 import { BBoxAreaLimit } from '../../common/helpers/bbox-area';
 
@@ -53,18 +53,18 @@ interface SnackDetails {
 
 const ExporterView: React.FC = observer(() => {
   const { exporterStore } = useStore();
-  const onExportClick = (): void => {
-    setOpen(true);
+  const onStatusClick = (): void => {
+    setOpenStatus(true);
   }
-  const [open, setOpen] = useState(false);
+  const onLoadClick = (): void => {
+    setOpenLoader(true);
+  }
   const [openStatus, setOpenStatus] = useState(false);
+  const [openLoader, setOpenLoader] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
   const [isDrawDisabled, setDrawDisabled] = useState(false);
   const [snackDetails, setSnackDetails] = useState<SnackDetails>({ message: '' });
   const intl = useIntl();
-  const onExportStatusClick = (): void => {
-    setOpenStatus(true);
-  }
   useEffect(() => {
     switch (exporterStore.state) {
       case ResponseState.DONE:
@@ -108,7 +108,7 @@ const ExporterView: React.FC = observer(() => {
       setSnackDetails({
         message: 'snack.message.server.failed',
       });
-      setOpen(false);
+      setOpenLoader(false);
     }
   }, [exporterStore, exporterStore.errors]);
 
@@ -133,17 +133,26 @@ const ExporterView: React.FC = observer(() => {
         <>
           <Button
             raised
-            disabled={exporterStore.searchParams.geojson && !isDrawDisabled ? false : true}
-            onClick={onExportClick}>
-            <FormattedMessage id="export.export-btn.text" />
+            onClick={onLoadClick}>
+            <FormattedMessage id="load.btn.text" />
           </Button>
           {
-            exporterStore.searchParams.geojson && open && <ExportDialog
-              isOpen={open}
-              onSetOpen={setOpen}
-              selectedPolygon={exporterStore.searchParams.geojson as Polygon}
+            openLoader && <ExportDialog
+              isOpen={openLoader}
+              onSetOpen={setOpenLoader}
               handleExport={exporterStore.startExportGeoPackage}>
             </ExportDialog>
+          }
+          <Button
+            raised
+            onClick={onStatusClick}>
+            <FormattedMessage id="load.status.btn.text" />
+          </Button>
+          {
+            openStatus && <ExportStatusDialog
+              isOpen={openStatus}
+              onSetOpen={setOpenStatus}>
+            </ExportStatusDialog>
           }
           {
             !!snackOpen && <Snackbar
@@ -154,7 +163,7 @@ const ExporterView: React.FC = observer(() => {
                 } else {
                   // on success (no errors)
                   exporterStore.searchParams.resetLocation();
-                  setOpen(false);
+                  setOpenLoader(false);
                 }
               }}
               onClose={(evt): void => {
@@ -176,17 +185,6 @@ const ExporterView: React.FC = observer(() => {
                 />
               }
             />
-          }
-          <Button
-            raised
-            onClick={onExportStatusClick}>
-            <FormattedMessage id="export.export-status-btn.text" />
-          </Button>
-          {
-            openStatus && <ExportSatusTableDialog
-              isOpen={openStatus}
-              onSetOpen={setOpenStatus}>
-            </ExportSatusTableDialog>
           }
         </>
       ]}

@@ -9,7 +9,7 @@ import MOCK_EXPORTED_PACKAGES from '../../../__mocks-data__/exportedPackages';
 import MESSAGES from '../../../common/i18n';
 import { rootStore, StoreProvider } from '../../models/rootStore';
 import { ExportTaskStatusResponse } from '../../models/exporterStore';
-import { ExportSatusTableDialog } from './export-table-dialog';
+import { ExportStatusDialog } from './export-status-dialog';
 
 const setOpenFn = jest.fn();
 
@@ -22,7 +22,7 @@ describe('ExportStatusTable component', () => {
     const wrapper = mount(
       <StoreProvider value={mockStore}>
         <IntlProvider locale={'en'} messages={MESSAGES['en']}>
-          <ExportSatusTableDialog
+          <ExportStatusDialog
             isOpen={true}
             onSetOpen={setOpenFn}
           />
@@ -37,7 +37,7 @@ describe('ExportStatusTable component', () => {
     });
 
     await waitFor(() => {
-      expect(wrapper.exists(ExportSatusTableDialog)).toBeTruthy();
+      expect(wrapper.exists(ExportStatusDialog)).toBeTruthy();
     });
   });
 
@@ -48,7 +48,7 @@ describe('ExportStatusTable component', () => {
     const wrapper = mount(
       <StoreProvider value={mockStore}>
         <IntlProvider locale={'en'} messages={MESSAGES['en']}>
-          <ExportSatusTableDialog
+          <ExportStatusDialog
             isOpen={true}
             onSetOpen={setOpenFn}
           />
@@ -75,7 +75,7 @@ describe('ExportStatusTable component', () => {
     const wrapper = mount(
       <StoreProvider value={mockStore}>
         <IntlProvider locale={'en'} messages={MESSAGES['en']}>
-          <ExportSatusTableDialog
+          <ExportStatusDialog
             isOpen={true}
             onSetOpen={setOpenFn}
           />

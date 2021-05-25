@@ -2,7 +2,7 @@ import { types, Instance } from 'mobx-state-tree';
 import { Polygon } from '@turf/helpers';
 
 export enum ExportStatus {
-  PENDING = 'pending',
+  PENDING = 'Pending',
   IN_PROGRESS = 'In-Progress',
   COMPLETED = 'Completed',
   FAILED = 'Failed',

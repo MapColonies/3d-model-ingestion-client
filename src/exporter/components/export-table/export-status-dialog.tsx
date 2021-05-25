@@ -24,16 +24,16 @@ import { useStore } from '../../models/rootStore';
 import { IExportTaskStatus, IBbox } from '../../models/exportTaskStatus';
 import { ProgressRenderer } from './cell-renderer/progress.cell-renderer';
 import { LinkRenderer } from './cell-renderer/link.cell-renderer';
-import './export-table-dialog.css';
+import './export-status-dialog.css';
 
 const unsetSize = 0;
 
-interface ExportSatusTableDialogProps {
+interface ExportStatusDialogProps {
   isOpen: boolean;
   onSetOpen: (open: boolean) => void;
 }
 
-export const ExportSatusTableDialog: React.FC<ExportSatusTableDialogProps> = observer(
+export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
   (props) => {
     const START_CYCLE_ITTERACTION = 0;
     const { exporterStore } = useStore();
@@ -288,7 +288,7 @@ export const ExportSatusTableDialog: React.FC<ExportSatusTableDialogProps> = obs
       <Box id="exportTable">
         <Dialog open={isOpen} preventOutsideDismiss={true}>
           <DialogTitle>
-            <FormattedMessage id="export-table.dialog.title" />
+            <FormattedMessage id="load.status.dialog.title" />
           </DialogTitle>
           <DialogContent>
             <Box

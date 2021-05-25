@@ -65,7 +65,6 @@ describe('ExportDialog component', () => {
           <ExportDialog
             isOpen={true}
             onSetOpen={setOpenFn}
-            selectedPolygon={polygon}
             handleExport={handleExport}
           />
         </IntlProvider>
@@ -86,7 +85,6 @@ describe('ExportDialog component', () => {
           <ExportDialog
             isOpen={true}
             onSetOpen={setOpenFn}
-            selectedPolygon={polygon}
             handleExport={handleExport}
           />
         </IntlProvider>
@@ -108,7 +106,6 @@ describe('ExportDialog component', () => {
           <ExportDialog
             isOpen={true}
             onSetOpen={setOpenFn}
-            selectedPolygon={polygon}
             handleExport={handleExport}
           />
         </IntlProvider>
@@ -126,8 +123,8 @@ describe('ExportDialog component', () => {
   });
   
   it('When package name and directory name are defined Ok button is enabled and download link properly generated', async () => {
-    const exportPackName = 'test';
-    const exportDirName = 'test';
+    const exportModelPath = 'test';
+    const exportTilesetFilename = 'test';
     const mockStore = rootStore.create({}, { fetch: packagesFetcher });
 
     const wrapper = mount(
@@ -136,7 +133,6 @@ describe('ExportDialog component', () => {
           <ExportDialog
             isOpen={true}
             onSetOpen={setOpenFn}
-            selectedPolygon={polygon}
             handleExport={handleExport}
           />
         </IntlProvider>
@@ -144,8 +140,8 @@ describe('ExportDialog component', () => {
     );
 
     await waitFor(() => {
-      updateField(wrapper, 'packageName', exportPackName);
-      updateField(wrapper, 'directoryName', exportDirName);
+      updateField(wrapper, 'modelPath', exportModelPath);
+      updateField(wrapper, 'tilesetFilename', exportTilesetFilename);
     })
 
     wrapper.update();
@@ -157,8 +153,8 @@ describe('ExportDialog component', () => {
   });
 
   it('When all data filled and FORM submitted, handleExport triggered', async () => {
-    const exportPackName = 'test';
-    const exportDirName = 'test';
+    const exportModelPath = 'test';
+    const exportTilesetFilename = 'test';
     const mockStore = rootStore.create({}, { fetch: packagesFetcher });
 
     const wrapper = mount(
@@ -167,7 +163,6 @@ describe('ExportDialog component', () => {
           <ExportDialog
             isOpen={true}
             onSetOpen={setOpenFn}
-            selectedPolygon={polygon}
             handleExport={handleExport}
           />
         </IntlProvider>
@@ -175,8 +170,8 @@ describe('ExportDialog component', () => {
     );
 
     await waitFor(() => {
-      updateField(wrapper, 'packageName', exportPackName);
-      updateField(wrapper, 'directoryName', exportDirName);
+      updateField(wrapper, 'modelPath', exportModelPath);
+      updateField(wrapper, 'tilesetFilename', exportTilesetFilename);
     })
 
     // eslint-disable-next-line
@@ -195,13 +190,9 @@ describe('ExportDialog component', () => {
   });
 
   it('When all data filled and FORM submitted, export fails', async () => {
-    const exportPackName = 'uniqueName';
-    const exportDirName = 'uniqueName';
-    const polygon: Polygon = {
-      type: 'Polygon',
-      coordinates: [[[35.4274677973303, 32.83433188112207], [], [35.427479676963486, 32.83434257279194], []]],
-    }
-    const maxZoom = 3;
+    const exportModelPath = 'uniqueName';
+    const exportTilesetFilename = 'uniqueName';
+    const modelIdentifier = 'a4277d1c-a656-48d9-ad60-5df0de1ed77f';
 
     const packagesFetcherFailure = async (): Promise<ExportTaskStatusResponse> => Promise.reject<ExportTaskStatusResponse>();
     const mockStore = rootStore.create({}, { fetch: packagesFetcherFailure });
@@ -216,16 +207,15 @@ describe('ExportDialog component', () => {
           <ExportDialog
             isOpen={true}
             onSetOpen={setOpenFn}
-            selectedPolygon={polygon}
             handleExport={handleExportError}
           />
         </IntlProvider>
       </StoreProvider>
     );
 
-    await updateFieldAsync(wrapper, 'packageName', exportPackName);
-    await updateFieldAsync(wrapper, 'directoryName', exportDirName);
-    await updateFieldAsync(wrapper, 'maxZoom', maxZoom);
+    await updateFieldAsync(wrapper, 'modelPath', exportModelPath);
+    await updateFieldAsync(wrapper, 'tilesetFilename', exportTilesetFilename);
+    await updateFieldAsync(wrapper, 'identifier', modelIdentifier);
 
     // eslint-disable-next-line
     await act(async () => {
@@ -243,31 +233,5 @@ describe('ExportDialog component', () => {
       expect(handleExportError).toHaveBeenCalled();
     });
   });
-
-  //// TODO test to check error presentation logic.
-  //// When component uses useFormik() hook internal formik state not updated when triggered onChange event.
-  //// Probably formik should be used in component way rather than hook.
-  //// Also preferable to test such functionality on the levevl of E2E tests.
-  // it('When package name defined but one of zooms not Ok button is disabled', async () => {
-  //   const exportPackName = 'test';
-  //   const wrapper = shallow(
-  //     <ExportDialog
-  //       isOpen={true}
-  //       onSetOpen={setOpenFn}
-  //       selectedPolygon={polygon}
-  //       handleExport={handleExport}
-  //     />
-  //   );
-
-  //   await updateFieldAsync(wrapper, 'packageName', exportPackName);
-  //   await updateFieldAsync(wrapper, 'minZoom', 0);
-
-  //   wrapper.update();
-
-  //   await waitFor(() => {
-  //     const okButton = getButtonById(wrapper, 'general.ok-btn.text');
-  //     expect(okButton.prop('disabled')).toBe(true);
-  //   });
-  // });
 
 });

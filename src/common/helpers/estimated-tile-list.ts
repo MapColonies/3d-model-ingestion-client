@@ -144,7 +144,7 @@ const getTilesCount = (polygon: Polygon, minZoom: number, maxZoom: number): numb
         if (tileCount % iterationsPerChunk === 0) {
           await oneMoment();
         }
-        // console.log('****getTiles iteraction', minZoom,'---', maxZoom);
+        
       }
     }
     //   })
