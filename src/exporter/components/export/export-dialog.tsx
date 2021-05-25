@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  Button,
-  Typography,
-} from '@map-colonies/react-core';
+import { Dialog, DialogTitle, DialogContent, TextField, Button, Grid, GridCell, GridRow } from '@map-colonies/react-core';
 import { Box } from '@map-colonies/react-components';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { observer } from 'mobx-react-lite';
-import { BBoxCorner, Corner } from '../bbox/bbox-corner-indicator';
-import { getTilesCount } from '../../../common/helpers/estimated-tile-list';
-import { getResolutionInMeteres } from '../../../common/helpers/zoom-resolution';
-import { useDebouncedLayoutEffect } from '../../../common/hooks/debounced.hooks';
-import EXPORTER_CONFIG from '../../../common/config';
 import { ModelInfo } from '../../models/exporterStore';
 import { ExportStoreError } from '../../../common/models/exportStoreError';
 import { useStore } from '../../models/rootStore';
-import { NotchLabel } from './notch-label';
 
 const FIRST_CHAR_IDX = 0;
-const DEBOUNCE_TIME = 300;
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     spacer: {
@@ -177,356 +163,372 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
           <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.model_path' })}
-              id="modelPath"
-              name="modelPath"
-              type="text"
-              onChange={checkText}
-              value={formik.values.modelPath}
-              fullwidth
-            />
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.model_path' })}
+                id="modelPath"
+                name="modelPath"
+                type="text"
+                onChange={checkText}
+                value={formik.values.modelPath}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.tileset_filename' })}
+                id="tilesetFilename"
+                name="tilesetFilename"
+                type="text"
+                onChange={checkText}
+                value={formik.values.tilesetFilename}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.identifier' })}
+                id="identifier"
+                name="identifier"
+                type="text"
+                onChange={checkText}
+                value={formik.values.identifier}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.typename' })}
+                id="typename"
+                name="typename"
+                type="text"
+                onChange={checkText}
+                value={formik.values.typename}
+                className={classes.spacer}
+              />
+            </Box>
           </Box>
           <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.tileset_filename' })}
-              id="tilesetFilename"
-              name="tilesetFilename"
-              type="text"
-              onChange={checkText}
-              value={formik.values.tilesetFilename}
-              fullwidth
-            />
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.schema' })}
+                id="schema"
+                name="schema"
+                type="text"
+                onChange={checkText}
+                value={formik.values.schema}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.md_source' })}
+                id="mdSource"
+                name="mdSource"
+                type="text"
+                onChange={checkText}
+                value={formik.values.mdSource}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.xml' })}
+                id="xml"
+                name="xml"
+                type="text"
+                onChange={checkText}
+                value={formik.values.xml}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.anytext' })}
+                id="anytext"
+                name="anytext"
+                type="text"
+                onChange={checkText}
+                value={formik.values.anytext}
+                className={classes.spacer}
+              />
+            </Box>
           </Box>
           <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.identifier' })}
-              id="identifier"
-              name="identifier"
-              type="text"
-              onChange={checkText}
-              value={formik.values.identifier}
-              fullwidth
-            />
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.insert_date' })}
+                id="insertDate"
+                name="insertDate"
+                type="text"
+                onChange={checkText}
+                value={formik.values.insertDate.toISOString()}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.creation_date' })}
+                id="creationDate"
+                name="creationDate"
+                type="text"
+                onChange={checkText}
+                value={formik.values.creationDate.toISOString()}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.validation_date' })}
+                id="validationDate"
+                name="validationDate"
+                type="text"
+                onChange={checkText}
+                value={formik.values.validationDate.toISOString()}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.wkt_geometry' })}
+                id="wktGeometry"
+                name="wktGeometry"
+                type="text"
+                onChange={checkText}
+                value={formik.values.wktGeometry}
+                className={classes.spacer}
+              />
+            </Box>
           </Box>
           <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.typename' })}
-              id="typename"
-              name="typename"
-              type="text"
-              onChange={checkText}
-              value={formik.values.typename}
-              fullwidth
-            />
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.title' })}
+                id="title"
+                name="title"
+                type="text"
+                onChange={checkText}
+                value={formik.values.title}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.producer_name' })}
+                id="producerName"
+                name="producerName"
+                type="text"
+                onChange={checkText}
+                value={formik.values.producerName}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.description' })}
+                id="description"
+                name="description"
+                type="text"
+                onChange={checkText}
+                value={formik.values.description}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.type' })}
+                id="type"
+                name="type"
+                type="text"
+                onChange={checkText}
+                value={formik.values.type}
+                className={classes.spacer}
+              />
+            </Box>
           </Box>
           <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.schema' })}
-              id="schema"
-              name="schema"
-              type="text"
-              onChange={checkText}
-              value={formik.values.schema}
-              fullwidth
-            />
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.classification' })}
+                id="classification"
+                name="classification"
+                type="text"
+                onChange={checkText}
+                value={formik.values.classification}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.srs' })}
+                id="srs"
+                name="srs"
+                type="text"
+                onChange={checkText}
+                value={formik.values.srs}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.project_name' })}
+                id="projectName"
+                name="projectName"
+                type="text"
+                onChange={checkText}
+                value={formik.values.projectName}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.version' })}
+                id="version"
+                name="version"
+                type="text"
+                onChange={checkText}
+                value={formik.values.version}
+                className={classes.spacer}
+              />
+            </Box>
           </Box>
           <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.md_source' })}
-              id="mdSource"
-              name="mdSource"
-              type="text"
-              onChange={checkText}
-              value={formik.values.mdSource}
-              fullwidth
-            />
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.centroid' })}
+                id="centroid"
+                name="centroid"
+                type="text"
+                onChange={checkText}
+                value={formik.values.centroid}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.footprint' })}
+                id="footprint"
+                name="footprint"
+                type="text"
+                onChange={checkText}
+                value={formik.values.footprint}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.time_begin' })}
+                id="timeBegin"
+                name="timeBegin"
+                type="text"
+                onChange={checkText}
+                value={formik.values.timeBegin.toISOString()}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.time_end' })}
+                id="timeEnd"
+                name="timeEnd"
+                type="text"
+                onChange={checkText}
+                value={formik.values.timeEnd.toISOString()}
+                className={classes.spacer}
+              />
+            </Box>
           </Box>
           <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.xml' })}
-              id="xml"
-              name="xml"
-              type="text"
-              onChange={checkText}
-              value={formik.values.xml}
-              fullwidth
-            />
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.sensor_type' })}
+                id="sensorType"
+                name="sensorType"
+                type="text"
+                onChange={checkText}
+                value={formik.values.sensorType}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.region' })}
+                id="region"
+                name="region"
+                type="text"
+                onChange={checkText}
+                value={formik.values.sensorType}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.nominal_resolution' })}
+                id="nominalResolution"
+                name="nominalResolution"
+                type="text"
+                onChange={checkText}
+                value={formik.values.nominalResolution}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.accuracy_le90' })}
+                id="accuracyLE90"
+                name="accuracyLE90"
+                type="text"
+                onChange={checkText}
+                value={formik.values.accuracyLE90}
+                className={classes.spacer}
+              />
+            </Box>
           </Box>
           <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.anytext' })}
-              id="anytext"
-              name="anytext"
-              type="text"
-              onChange={checkText}
-              value={formik.values.anytext}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.insert_date' })}
-              id="insertDate"
-              name="insertDate"
-              type="text"
-              onChange={checkText}
-              value={formik.values.insertDate.toISOString()}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.creation_date' })}
-              id="creationDate"
-              name="creationDate"
-              type="text"
-              onChange={checkText}
-              value={formik.values.creationDate.toISOString()}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.validation_date' })}
-              id="validationDate"
-              name="validationDate"
-              type="text"
-              onChange={checkText}
-              value={formik.values.validationDate.toISOString()}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.wkt_geometry' })}
-              id="wktGeometry"
-              name="wktGeometry"
-              type="text"
-              onChange={checkText}
-              value={formik.values.wktGeometry}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.title' })}
-              id="title"
-              name="title"
-              type="text"
-              onChange={checkText}
-              value={formik.values.title}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.producer_name' })}
-              id="producerName"
-              name="producerName"
-              type="text"
-              onChange={checkText}
-              value={formik.values.producerName}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.description' })}
-              id="description"
-              name="description"
-              type="text"
-              onChange={checkText}
-              value={formik.values.description}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.type' })}
-              id="type"
-              name="type"
-              type="text"
-              onChange={checkText}
-              value={formik.values.type}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.classification' })}
-              id="classification"
-              name="classification"
-              type="text"
-              onChange={checkText}
-              value={formik.values.classification}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.srs' })}
-              id="srs"
-              name="srs"
-              type="text"
-              onChange={checkText}
-              value={formik.values.srs}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.project_name' })}
-              id="projectName"
-              name="projectName"
-              type="text"
-              onChange={checkText}
-              value={formik.values.projectName}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.version' })}
-              id="version"
-              name="version"
-              type="text"
-              onChange={checkText}
-              value={formik.values.version}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.centroid' })}
-              id="centroid"
-              name="centroid"
-              type="text"
-              onChange={checkText}
-              value={formik.values.centroid}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.footprint' })}
-              id="footprint"
-              name="footprint"
-              type="text"
-              onChange={checkText}
-              value={formik.values.footprint}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.time_begin' })}
-              id="timeBegin"
-              name="timeBegin"
-              type="text"
-              onChange={checkText}
-              value={formik.values.timeBegin.toISOString()}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.time_end' })}
-              id="timeEnd"
-              name="timeEnd"
-              type="text"
-              onChange={checkText}
-              value={formik.values.timeEnd.toISOString()}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.sensor_type' })}
-              id="sensorType"
-              name="sensorType"
-              type="text"
-              onChange={checkText}
-              value={formik.values.sensorType}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.region' })}
-              id="region"
-              name="region"
-              type="text"
-              onChange={checkText}
-              value={formik.values.sensorType}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.nominal_resolution' })}
-              id="nominalResolution"
-              name="nominalResolution"
-              type="text"
-              onChange={checkText}
-              value={formik.values.nominalResolution}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.accuracy_le90' })}
-              id="accuracyLE90"
-              name="accuracyLE90"
-              type="text"
-              onChange={checkText}
-              value={formik.values.accuracyLE90}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.horizontal_accuracy_ce90' })}
-              id="horizontalAccuracyCE90"
-              name="horizontalAccuracyCE90"
-              type="text"
-              onChange={checkText}
-              value={formik.values.horizontalAccuracyCE90}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.relative_accuracy_le90' })}
-              id="relativeAccuracyLE90"
-              name="relativeAccuracyLE90"
-              type="text"
-              onChange={checkText}
-              value={formik.values.relativeAccuracyLE90}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.estimated_precision' })}
-              id="estimatedPrecision"
-              name="estimatedPrecision"
-              type="text"
-              onChange={checkText}
-              value={formik.values.estimatedPrecision}
-              fullwidth
-            />
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <TextField
-              label={intl.formatMessage({ id: 'load.dialog.field.measured_precision' })}
-              id="measuredPrecision"
-              name="measuredPrecision"
-              type="text"
-              onChange={checkText}
-              value={formik.values.measuredPrecision}
-              fullwidth
-            />
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.horizontal_accuracy_ce90' })}
+                id="horizontalAccuracyCE90"
+                name="horizontalAccuracyCE90"
+                type="text"
+                onChange={checkText}
+                value={formik.values.horizontalAccuracyCE90}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.relative_accuracy_le90' })}
+                id="relativeAccuracyLE90"
+                name="relativeAccuracyLE90"
+                type="text"
+                onChange={checkText}
+                value={formik.values.relativeAccuracyLE90}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.estimated_precision' })}
+                id="estimatedPrecision"
+                name="estimatedPrecision"
+                type="text"
+                onChange={checkText}
+                value={formik.values.estimatedPrecision}
+                className={classes.spacer}
+              />
+            </Box>
+            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+              <TextField
+                label={intl.formatMessage({ id: 'load.dialog.field.measured_precision' })}
+                id="measuredPrecision"
+                name="measuredPrecision"
+                type="text"
+                onChange={checkText}
+                value={formik.values.measuredPrecision}
+                className={classes.spacer}
+              />
+            </Box>
           </Box>
 
           <Box style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px', gap: '16px' }}>
