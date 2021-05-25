@@ -38,6 +38,23 @@ export const exportTaskStatus = types.model({
   sourceLayer: types.string
 });
 
+/*
+export const loadModelStatus = types.model({
+  id: types.string,
+  resourceId: types.string,
+  version: types.string,
+  type: types.string,
+  description: types.string,
+  parameters: types.string,
+  creationTime: types.Date,
+  updateTime: types.Date,
+  status: types.enumeration<LoadStatus>(
+    'status',
+    Object.values(LoadStatus)
+  ),
+});
+*/
+
 export interface IExportTaskStatus extends Instance<typeof exportTaskStatus> {}
 
 export interface IBbox extends Instance<typeof bbox> {}
