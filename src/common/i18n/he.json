@@ -33,7 +33,6 @@
   "export.dialog-field.min_zoom.label": "רמת זום מינימלי",
   "export.dialog-field.max_zoom.label": "רמת זום מקסימלי",
   "export.dialog-field.zoom_resolution.units.meter": "מ'/פיקסל",
-  "export.dialog-info.label": "מידע על חבילה:",
   "export.dialog-info.link.label": "קישור:",
   "export.dialog-info.link.pattern": "https://packages/{packageName}.gpkg",
   "export.dialog.duplicate-path.text": "קובץ בשם זה כבר קיים בתיקייה זו",

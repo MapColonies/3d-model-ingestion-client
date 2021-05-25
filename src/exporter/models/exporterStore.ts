@@ -1,16 +1,14 @@
 /* eslint-disable camelcase */
 import { types, Instance, flow, getParent, getSnapshot } from 'mobx-state-tree';
-import { Polygon } from '@turf/helpers';
 import { AxiosRequestConfig, AxiosError } from 'axios';
 import { ApiHttpResponse } from '../../common/models/api-response';
 import { ResponseState } from '../../common/models/ResponseState';
 import { ExportStoreError } from '../../common/models/exportStoreError';
-import { getExportLayerUrl } from '../../common/helpers/layer-url';
 import EXPORTER_CONFIG from '../../common/config';
-// import MOCK_EXPORTED_PACKAGES from '../../__mocks-data__/exportedPackages';
 import { searchParams } from './search-params';
 import { IRootStore } from './rootStore';
 import { IExportTaskStatus } from './exportTaskStatus';
+import { model } from 'mobx-state-tree/dist/internal';
 
 export type ExportTaskStatusResponse = IExportTaskStatus[];
 export interface ExportResult {
@@ -22,6 +20,35 @@ export interface ModelInfo {
   modelPath: string;
   tilesetFilename: string;
   identifier: string;
+  typename: string;
+  schema: string;
+  mdSource: string;
+  xml: string;
+  anytext: string;
+  insertDate: Date;
+  creationDate?: Date;
+  validationDate?: Date;
+  wktGeometry?: string;
+  title?: string;
+  producerName: string; // IDFMU
+  description: string;
+  type: string;
+  classification: string;
+  srs: string;
+  projectName: string;
+  version: string;
+  centroid: string;
+  footprint: string;
+  timeBegin: Date;
+  timeEnd: Date;
+  sensorType: string;
+  region: string;
+  nominalResolution: string;
+  accuracyLE90: string;
+  horizontalAccuracyCE90: string;
+  relativeAccuracyLE90: string;
+  estimatedPrecision: string;
+  measuredPrecision: string;
 }
 
 export type ExporterResponse = ApiHttpResponse<ExportResult>;
@@ -64,7 +91,35 @@ export const exporterStore = types
       params.modelPath = modelInfo.modelPath;
       params.tilesetFilename = modelInfo.tilesetFilename;
       params.identifier = modelInfo.identifier;
-      params.exportedLayers = [{ exportType: 'raster', url: getExportLayerUrl(), sourceLayer: sourceLayer }];
+      params.typename = modelInfo.typename;
+      params.schema = modelInfo.schema;
+      params.mdSource = modelInfo.mdSource;
+      params.xml = modelInfo.xml;
+      params.anytext = modelInfo.anytext;
+      params.insertDate = modelInfo.insertDate;
+      params.creationDate = modelInfo.creationDate;
+      params.validationDate = modelInfo.validationDate;
+      params.wktGeometry = modelInfo.wktGeometry;
+      params.title = modelInfo.title;
+      params.producerName = modelInfo.producerName;
+      params.description = modelInfo.description;
+      params.type = modelInfo.type;
+      params.classification = modelInfo.classification;
+      params.srs = modelInfo.srs;
+      params.projectName = modelInfo.projectName;
+      params.version = modelInfo.version;
+      params.centroid = modelInfo.centroid;
+      params.footprint = modelInfo.footprint;
+      params.timeBegin = modelInfo.timeBegin;
+      params.timeEnd = modelInfo.timeEnd;
+      params.sensorType = modelInfo.sensorType;
+      params.region = modelInfo.region;
+      params.nominalResolution = modelInfo.nominalResolution;
+      params.accuracyLE90 = modelInfo.accuracyLE90;
+      params.horizontalAccuracyCE90 = modelInfo.horizontalAccuracyCE90;
+      params.relativeAccuracyLE90 = modelInfo.relativeAccuracyLE90;
+      params.estimatedPrecision = modelInfo.estimatedPrecision;
+      params.measuredPrecision = modelInfo.measuredPrecision;
 
       try {
         const result = yield self.root.fetch(

@@ -58,10 +58,6 @@ const isValidText = (e: React.ChangeEvent<any>): boolean => {
   return (charIdx === FIRST_CHAR_IDX);
 };
 
-const calcPackSize = (tiles: number): number => {
-  return Math.ceil(tiles * EXPORTER_CONFIG.EXPORT.AVG_TILE_SIZE_MB);
-}
-
 interface ExportDialogProps {
   isOpen: boolean;
   onSetOpen: (open: boolean) => void;
@@ -77,13 +73,71 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
     initialValues: {
       modelPath: '',
       tilesetFilename: '',
-      identifier: ''
+      identifier: '',
+      typename: '',
+      schema: '',
+      mdSource: '',
+      xml: '',
+      anytext: '',
+      insertDate: new Date(),
+      creationDate: new Date(),
+      validationDate: new Date(),
+      wktGeometry: '',
+      title: '',
+      producerName: '',
+      description: '',
+      type: '',
+      classification: '',
+      srs: '',
+      projectName: '',
+      version: '',
+      centroid: '',
+      footprint: '',
+      timeBegin: new Date(),
+      timeEnd: new Date(),
+      sensorType: '',
+      region: '',
+      nominalResolution: '',
+      accuracyLE90: '',
+      horizontalAccuracyCE90: '',
+      relativeAccuracyLE90: '',
+      estimatedPrecision: '',
+      measuredPrecision: ''
     },
     onSubmit: values => {
       void handleExport({
         modelPath: formik.values.modelPath,
         tilesetFilename: formik.values.tilesetFilename,
         identifier: formik.values.identifier,
+        typename: formik.values.typename,
+        schema: formik.values.schema,
+        mdSource: formik.values.mdSource,
+        xml: formik.values.xml,
+        anytext: formik.values.anytext,
+        insertDate: formik.values.insertDate,
+        creationDate: formik.values.creationDate,
+        validationDate: formik.values.validationDate,
+        wktGeometry: formik.values.wktGeometry,
+        title: formik.values.title,
+        producerName: formik.values.producerName,
+        description: formik.values.description,
+        type: formik.values.type,
+        classification: formik.values.classification,
+        srs: formik.values.srs,
+        projectName: formik.values.projectName,
+        version: formik.values.version,
+        centroid: formik.values.centroid,
+        footprint: formik.values.footprint,
+        timeBegin: formik.values.timeBegin,
+        timeEnd: formik.values.timeEnd,
+        sensorType: formik.values.sensorType,
+        region: formik.values.region,
+        nominalResolution: formik.values.nominalResolution,
+        accuracyLE90: formik.values.accuracyLE90,
+        horizontalAccuracyCE90: formik.values.horizontalAccuracyCE90,
+        relativeAccuracyLE90: formik.values.relativeAccuracyLE90,
+        estimatedPrecision: formik.values.estimatedPrecision,
+        measuredPrecision: formik.values.measuredPrecision
       });
     },
   });
@@ -155,17 +209,324 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
               fullwidth
             />
           </Box>
-
-          <Box style={{ display: 'flex' }}>
-            <Typography use="body1" className={classes.infoLabel}>
-              <FormattedMessage id="export.dialog-info.label" />
-            </Typography>
-            <Typography use="body2">
-              ~{numTiles} {intl.formatMessage({ id: 'export.dialog.tiles.text' })},&nbsp;
-            </Typography>
-            <Typography use="body2" style={{ marginLeft: '32px' }}>
-              ~{calcPackSize(numTiles)}Mb
-            </Typography>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.typename' })}
+              id="typename"
+              name="typename"
+              type="text"
+              onChange={checkText}
+              value={formik.values.typename}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.schema' })}
+              id="schema"
+              name="schema"
+              type="text"
+              onChange={checkText}
+              value={formik.values.schema}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.md_source' })}
+              id="mdSource"
+              name="mdSource"
+              type="text"
+              onChange={checkText}
+              value={formik.values.mdSource}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.xml' })}
+              id="xml"
+              name="xml"
+              type="text"
+              onChange={checkText}
+              value={formik.values.xml}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.anytext' })}
+              id="anytext"
+              name="anytext"
+              type="text"
+              onChange={checkText}
+              value={formik.values.anytext}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.insert_date' })}
+              id="insertDate"
+              name="insertDate"
+              type="text"
+              onChange={checkText}
+              value={formik.values.insertDate.toISOString()}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.creation_date' })}
+              id="creationDate"
+              name="creationDate"
+              type="text"
+              onChange={checkText}
+              value={formik.values.creationDate.toISOString()}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.validation_date' })}
+              id="validationDate"
+              name="validationDate"
+              type="text"
+              onChange={checkText}
+              value={formik.values.validationDate.toISOString()}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.wkt_geometry' })}
+              id="wktGeometry"
+              name="wktGeometry"
+              type="text"
+              onChange={checkText}
+              value={formik.values.wktGeometry}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.title' })}
+              id="title"
+              name="title"
+              type="text"
+              onChange={checkText}
+              value={formik.values.title}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.producer_name' })}
+              id="producerName"
+              name="producerName"
+              type="text"
+              onChange={checkText}
+              value={formik.values.producerName}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.description' })}
+              id="description"
+              name="description"
+              type="text"
+              onChange={checkText}
+              value={formik.values.description}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.type' })}
+              id="type"
+              name="type"
+              type="text"
+              onChange={checkText}
+              value={formik.values.type}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.classification' })}
+              id="classification"
+              name="classification"
+              type="text"
+              onChange={checkText}
+              value={formik.values.classification}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.srs' })}
+              id="srs"
+              name="srs"
+              type="text"
+              onChange={checkText}
+              value={formik.values.srs}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.project_name' })}
+              id="projectName"
+              name="projectName"
+              type="text"
+              onChange={checkText}
+              value={formik.values.projectName}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.version' })}
+              id="version"
+              name="version"
+              type="text"
+              onChange={checkText}
+              value={formik.values.version}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.centroid' })}
+              id="centroid"
+              name="centroid"
+              type="text"
+              onChange={checkText}
+              value={formik.values.centroid}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.footprint' })}
+              id="footprint"
+              name="footprint"
+              type="text"
+              onChange={checkText}
+              value={formik.values.footprint}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.time_begin' })}
+              id="timeBegin"
+              name="timeBegin"
+              type="text"
+              onChange={checkText}
+              value={formik.values.timeBegin.toISOString()}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.time_end' })}
+              id="timeEnd"
+              name="timeEnd"
+              type="text"
+              onChange={checkText}
+              value={formik.values.timeEnd.toISOString()}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.sensor_type' })}
+              id="sensorType"
+              name="sensorType"
+              type="text"
+              onChange={checkText}
+              value={formik.values.sensorType}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.region' })}
+              id="region"
+              name="region"
+              type="text"
+              onChange={checkText}
+              value={formik.values.sensorType}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.nominal_resolution' })}
+              id="nominalResolution"
+              name="nominalResolution"
+              type="text"
+              onChange={checkText}
+              value={formik.values.nominalResolution}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.accuracy_le90' })}
+              id="accuracyLE90"
+              name="accuracyLE90"
+              type="text"
+              onChange={checkText}
+              value={formik.values.accuracyLE90}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.horizontal_accuracy_ce90' })}
+              id="horizontalAccuracyCE90"
+              name="horizontalAccuracyCE90"
+              type="text"
+              onChange={checkText}
+              value={formik.values.horizontalAccuracyCE90}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.relative_accuracy_le90' })}
+              id="relativeAccuracyLE90"
+              name="relativeAccuracyLE90"
+              type="text"
+              onChange={checkText}
+              value={formik.values.relativeAccuracyLE90}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.estimated_precision' })}
+              id="estimatedPrecision"
+              name="estimatedPrecision"
+              type="text"
+              onChange={checkText}
+              value={formik.values.estimatedPrecision}
+              fullwidth
+            />
+          </Box>
+          <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <TextField
+              label={intl.formatMessage({ id: 'load.dialog.field.measured_precision' })}
+              id="measuredPrecision"
+              name="measuredPrecision"
+              type="text"
+              onChange={checkText}
+              value={formik.values.measuredPrecision}
+              fullwidth
+            />
           </Box>
 
           <Box style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px', gap: '16px' }}>
@@ -177,21 +538,20 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                 null
             }
             {
-              // Display any server error the occurred
               Object.entries(serverErrors).map(([error, value], index) => {
                 return value ?
                 <div key={index} className={classes.errorContainer}>
                   {`${intl.formatMessage({ id: 'general.error.label' })}: ${intl.formatMessage({ id: value })}`}
                 </div> :
                 null
-              }
-              )
+              })
             }
             <Button type="button" onClick={(): void => { handleClose(false); }}>
               <FormattedMessage id="general.cancel-btn.text" />
             </Button>
-            <Button raised type="submit" disabled={!!formErrors.minMaxZooms || !formik.values.tilesetFilename || 
-              !!serverErrors.duplicate || !formik.values.modelPath}>
+            <Button raised type="submit" disabled={!!formErrors.minMaxZooms || !!serverErrors.duplicate || 
+              !formik.values.modelPath ||
+              !formik.values.tilesetFilename}>
               <FormattedMessage id="general.ok-btn.text" />
             </Button>
           </Box>

@@ -27,6 +27,7 @@ describe('Exporter Store', () => {
         fetch: async () => Promise.resolve({}),
       }
     );
+    const currentDate = new Date();
 
     exporterStore.searchParams.setLocation({
       type: 'MultiPolygon',
@@ -34,9 +35,38 @@ describe('Exporter Store', () => {
     });
 
     await exporterStore.startExportGeoPackage({
-      modelPath: 'kuku',
-      tilesetFilename: 'kuku',
+      modelPath: '/tmp/tilesets/TilesetWithDiscreteLOD',
+      tilesetFilename: 'tileset.json',
       identifier: 'a4277d1c-a656-48d9-ad60-5df0de1ed77f',
+      typename: 'xxx',
+      schema: 'xxx',
+      mdSource: 'xxx',
+      xml: 'xxx',
+      anytext: 'xxx',
+      insertDate: currentDate,
+      creationDate: currentDate,
+      validationDate: currentDate,
+      wktGeometry: 'xxx',
+      title: 'xxx',
+      producerName: 'IDFMU',
+      description: 'xxx',
+      type: 'xxx',
+      classification: 'xxx',
+      srs: 'xxx',
+      projectName: 'xxx',
+      version: 'xxx',
+      centroid: 'xxx',
+      footprint: 'xxx',
+      timeBegin: currentDate,
+      timeEnd: currentDate,
+      sensorType: 'xxx',
+      region: 'xxx',
+      nominalResolution: 'xxx',
+      accuracyLE90: 'xxx',
+      horizontalAccuracyCE90: 'xxx',
+      relativeAccuracyLE90: 'xxx',
+      estimatedPrecision: 'xxx',
+      measuredPrecision: 'xxx'
     });
 
     expect(exporterStore.state).toBe(ResponseState.DONE);
@@ -49,6 +79,7 @@ describe('Exporter Store', () => {
         fetch: async () => Promise.reject(),
       }
     );
+    const currentDate = new Date();
 
     exporterStore.searchParams.setLocation({
       type: 'MultiPolygon',
@@ -56,9 +87,38 @@ describe('Exporter Store', () => {
     });
 
     await exporterStore.startExportGeoPackage({
-      modelPath: 'kuku',
-      tilesetFilename: 'kuku',
+      modelPath: '/tmp/tilesets/TilesetWithDiscreteLOD',
+      tilesetFilename: 'tileset.json',
       identifier: 'a4277d1c-a656-48d9-ad60-5df0de1ed77f',
+      typename: 'xxx',
+      schema: 'xxx',
+      mdSource: 'xxx',
+      xml: 'xxx',
+      anytext: 'xxx',
+      insertDate: currentDate,
+      creationDate: currentDate,
+      validationDate: currentDate,
+      wktGeometry: 'xxx',
+      title: 'xxx',
+      producerName: 'IDFMU',
+      description: 'xxx',
+      type: 'xxx',
+      classification: 'xxx',
+      srs: 'xxx',
+      projectName: 'xxx',
+      version: 'xxx',
+      centroid: 'xxx',
+      footprint: 'xxx',
+      timeBegin: currentDate,
+      timeEnd: currentDate,
+      sensorType: 'xxx',
+      region: 'xxx',
+      nominalResolution: 'xxx',
+      accuracyLE90: 'xxx',
+      horizontalAccuracyCE90: 'xxx',
+      relativeAccuracyLE90: 'xxx',
+      estimatedPrecision: 'xxx',
+      measuredPrecision: 'xxx'
     });
 
     expect(exporterStore.state).toBe(ResponseState.ERROR);

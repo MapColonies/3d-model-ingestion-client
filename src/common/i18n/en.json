@@ -33,7 +33,6 @@
   "export.dialog-field.min_zoom.label": "Min Zoom Level",
   "export.dialog-field.max_zoom.label": "Max Zoom Level",
   "export.dialog-field.zoom_resolution.units.meter": "m/px",
-  "export.dialog-info.label": "Package info:",
   "export.dialog-info.link.label": "Link:",
   "export.dialog-info.link.pattern": "https://packages/{packageName}.gpkg",
   "export.dialog.duplicate-path.text": "A file with this name already exists in this folder",
