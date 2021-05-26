@@ -288,7 +288,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
       <Box id="exportTable">
         <Dialog open={isOpen} preventOutsideDismiss={true}>
           <DialogTitle>
-            <FormattedMessage id="load.status.dialog.title" />
+            <FormattedMessage id="ingestion.status.dialog.title" />
           </DialogTitle>
           <DialogContent>
             <Box

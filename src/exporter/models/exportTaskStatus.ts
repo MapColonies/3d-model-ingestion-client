@@ -39,7 +39,7 @@ export const exportTaskStatus = types.model({
 });
 
 /*
-export const loadModelStatus = types.model({
+export const ingestionStatus = types.model({
   id: types.string,
   resourceId: types.string,
   version: types.string,
@@ -48,9 +48,9 @@ export const loadModelStatus = types.model({
   parameters: types.string,
   creationTime: types.Date,
   updateTime: types.Date,
-  status: types.enumeration<LoadStatus>(
+  status: types.enumeration<ExportStatus>(
     'status',
-    Object.values(LoadStatus)
+    Object.values(ExportStatus)
   ),
 });
 */

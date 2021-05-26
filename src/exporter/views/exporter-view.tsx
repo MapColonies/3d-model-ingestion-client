@@ -56,11 +56,11 @@ const ExporterView: React.FC = observer(() => {
   const onStatusClick = (): void => {
     setOpenStatus(true);
   }
-  const onLoadClick = (): void => {
-    setOpenLoader(true);
+  const onModelIngestionClick = (): void => {
+    setOpenModelIngestion(true);
   }
   const [openStatus, setOpenStatus] = useState(false);
-  const [openLoader, setOpenLoader] = useState(false);
+  const [openModelIngestion, setOpenModelIngestion] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
   const [isDrawDisabled, setDrawDisabled] = useState(false);
   const [snackDetails, setSnackDetails] = useState<SnackDetails>({ message: '' });
@@ -108,7 +108,7 @@ const ExporterView: React.FC = observer(() => {
       setSnackDetails({
         message: 'snack.message.server.failed',
       });
-      setOpenLoader(false);
+      setOpenModelIngestion(false);
     }
   }, [exporterStore, exporterStore.errors]);
 
@@ -133,20 +133,20 @@ const ExporterView: React.FC = observer(() => {
         <>
           <Button
             raised
-            onClick={onLoadClick}>
-            <FormattedMessage id="load.btn.text" />
+            onClick={onModelIngestionClick}>
+            <FormattedMessage id="ingestion.btn.text" />
           </Button>
           {
-            openLoader && <ExportDialog
-              isOpen={openLoader}
-              onSetOpen={setOpenLoader}
+            openModelIngestion && <ExportDialog
+              isOpen={openModelIngestion}
+              onSetOpen={setOpenModelIngestion}
               handleExport={exporterStore.startExportGeoPackage}>
             </ExportDialog>
           }
           <Button
             raised
             onClick={onStatusClick}>
-            <FormattedMessage id="load.status.btn.text" />
+            <FormattedMessage id="ingestion.status.btn.text" />
           </Button>
           {
             openStatus && <ExportStatusDialog
@@ -163,7 +163,7 @@ const ExporterView: React.FC = observer(() => {
                 } else {
                   // on success (no errors)
                   exporterStore.searchParams.resetLocation();
-                  setOpenLoader(false);
+                  setOpenModelIngestion(false);
                 }
               }}
               onClose={(evt): void => {

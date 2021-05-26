@@ -13,23 +13,41 @@ const FIRST_CHAR_IDX = 0;
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     spacer: {
-      marginRight: '16px'
+      marginTop: '5px',
+      marginRight: '5px',
+      marginLeft: '5px'
     },
     errorContainer: {
       display: 'flex',
       alignItems: 'center',
       marginRight: 'auto',
-      color: theme.palette.error.main,
+      color: theme.palette.error.main
     },
     noBorder: {
-      border: 'unset',
+      border: 'unset'
     },
     readOnly: {
-      backgroundColor: 'transparent !important',
+      backgroundColor: 'transparent !important'
     },
     infoLabel: {
-      width: '110px',
+      width: '110px'
     },
+    metadata: {
+      justifyContent: 'space-around',
+      borderRadius: '10px',
+      border: '1px solid lightgray',
+      padding: '20px'
+    },
+    textFields: {
+      display: 'flex',
+      marginBottom: '16px'
+    },
+    buttons: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      marginTop: '16px',
+      gap: '16px'
+    }
   })
 );
 
@@ -57,8 +75,8 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   const intl = useIntl();
   const formik = useFormik({
     initialValues: {
-      modelPath: '',
-      tilesetFilename: '',
+      modelPath: '/tmp/tilesets',
+      tilesetFilename: 'tileset.json',
       identifier: '',
       typename: '',
       schema: '',
@@ -158,14 +176,14 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   return (
     <Dialog open={isOpen} preventOutsideDismiss={true}>
       <DialogTitle>
-        <FormattedMessage id="load.dialog.title" />
+        <FormattedMessage id="ingestion.dialog.title" />
       </DialogTitle>
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+          <Box className={classes.textFields} style={{ justifyContent: 'space-around' }}>
+            <Box className={classes.textFields} style={{ flexGrow: 20 }}>
               <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.model_path' })}
+                label={intl.formatMessage({ id: 'ingestion.dialog.field.model_path' })}
                 id="modelPath"
                 name="modelPath"
                 type="text"
@@ -174,9 +192,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                 className={classes.spacer}
               />
             </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
+            <Box className={classes.textFields} style={{ flexGrow: 1, justifyContent: 'flex-end' }}>
               <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.tileset_filename' })}
+                label={intl.formatMessage({ id: 'ingestion.dialog.field.tileset_filename' })}
                 id="tilesetFilename"
                 name="tilesetFilename"
                 type="text"
@@ -185,353 +203,353 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                 className={classes.spacer}
               />
             </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.identifier' })}
-                id="identifier"
-                name="identifier"
-                type="text"
-                onChange={checkText}
-                value={formik.values.identifier}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.typename' })}
-                id="typename"
-                name="typename"
-                type="text"
-                onChange={checkText}
-                value={formik.values.typename}
-                className={classes.spacer}
-              />
-            </Box>
           </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.schema' })}
-                id="schema"
-                name="schema"
-                type="text"
-                onChange={checkText}
-                value={formik.values.schema}
-                className={classes.spacer}
-              />
+          <Box className={classes.metadata}>
+            <Box className={classes.textFields}>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.identifier' })}
+                  id="identifier"
+                  name="identifier"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.identifier}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.typename' })}
+                  id="typename"
+                  name="typename"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.typename}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.schema' })}
+                  id="schema"
+                  name="schema"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.schema}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.md_source' })}
+                  id="mdSource"
+                  name="mdSource"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.mdSource}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.xml' })}
+                  id="xml"
+                  name="xml"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.xml}
+                  className={classes.spacer}
+                />
+              </Box>
             </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.md_source' })}
-                id="mdSource"
-                name="mdSource"
-                type="text"
-                onChange={checkText}
-                value={formik.values.mdSource}
-                className={classes.spacer}
-              />
+            <Box className={classes.textFields}>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.anytext' })}
+                  id="anytext"
+                  name="anytext"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.anytext}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.insert_date' })}
+                  id="insertDate"
+                  name="insertDate"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.insertDate.toISOString()}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.creation_date' })}
+                  id="creationDate"
+                  name="creationDate"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.creationDate.toISOString()}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.validation_date' })}
+                  id="validationDate"
+                  name="validationDate"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.validationDate.toISOString()}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.wkt_geometry' })}
+                  id="wktGeometry"
+                  name="wktGeometry"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.wktGeometry}
+                  className={classes.spacer}
+                />
+              </Box>
             </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.xml' })}
-                id="xml"
-                name="xml"
-                type="text"
-                onChange={checkText}
-                value={formik.values.xml}
-                className={classes.spacer}
-              />
+            <Box className={classes.textFields}>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.title' })}
+                  id="title"
+                  name="title"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.title}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.producer_name' })}
+                  id="producerName"
+                  name="producerName"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.producerName}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.description' })}
+                  id="description"
+                  name="description"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.description}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.type' })}
+                  id="type"
+                  name="type"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.type}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.classification' })}
+                  id="classification"
+                  name="classification"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.classification}
+                  className={classes.spacer}
+                />
+              </Box>
             </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.anytext' })}
-                id="anytext"
-                name="anytext"
-                type="text"
-                onChange={checkText}
-                value={formik.values.anytext}
-                className={classes.spacer}
-              />
+            <Box className={classes.textFields}>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.srs' })}
+                  id="srs"
+                  name="srs"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.srs}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.project_name' })}
+                  id="projectName"
+                  name="projectName"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.projectName}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.version' })}
+                  id="version"
+                  name="version"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.version}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.centroid' })}
+                  id="centroid"
+                  name="centroid"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.centroid}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.footprint' })}
+                  id="footprint"
+                  name="footprint"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.footprint}
+                  className={classes.spacer}
+                />
+              </Box>
             </Box>
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.insert_date' })}
-                id="insertDate"
-                name="insertDate"
-                type="text"
-                onChange={checkText}
-                value={formik.values.insertDate.toISOString()}
-                className={classes.spacer}
-              />
+            <Box className={classes.textFields}>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.time_begin' })}
+                  id="timeBegin"
+                  name="timeBegin"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.timeBegin.toISOString()}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.time_end' })}
+                  id="timeEnd"
+                  name="timeEnd"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.timeEnd.toISOString()}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.sensor_type' })}
+                  id="sensorType"
+                  name="sensorType"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.sensorType}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.region' })}
+                  id="region"
+                  name="region"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.sensorType}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.nominal_resolution' })}
+                  id="nominalResolution"
+                  name="nominalResolution"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.nominalResolution}
+                  className={classes.spacer}
+                />
+              </Box>
             </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.creation_date' })}
-                id="creationDate"
-                name="creationDate"
-                type="text"
-                onChange={checkText}
-                value={formik.values.creationDate.toISOString()}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.validation_date' })}
-                id="validationDate"
-                name="validationDate"
-                type="text"
-                onChange={checkText}
-                value={formik.values.validationDate.toISOString()}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.wkt_geometry' })}
-                id="wktGeometry"
-                name="wktGeometry"
-                type="text"
-                onChange={checkText}
-                value={formik.values.wktGeometry}
-                className={classes.spacer}
-              />
-            </Box>
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.title' })}
-                id="title"
-                name="title"
-                type="text"
-                onChange={checkText}
-                value={formik.values.title}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.producer_name' })}
-                id="producerName"
-                name="producerName"
-                type="text"
-                onChange={checkText}
-                value={formik.values.producerName}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.description' })}
-                id="description"
-                name="description"
-                type="text"
-                onChange={checkText}
-                value={formik.values.description}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.type' })}
-                id="type"
-                name="type"
-                type="text"
-                onChange={checkText}
-                value={formik.values.type}
-                className={classes.spacer}
-              />
-            </Box>
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.classification' })}
-                id="classification"
-                name="classification"
-                type="text"
-                onChange={checkText}
-                value={formik.values.classification}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.srs' })}
-                id="srs"
-                name="srs"
-                type="text"
-                onChange={checkText}
-                value={formik.values.srs}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.project_name' })}
-                id="projectName"
-                name="projectName"
-                type="text"
-                onChange={checkText}
-                value={formik.values.projectName}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.version' })}
-                id="version"
-                name="version"
-                type="text"
-                onChange={checkText}
-                value={formik.values.version}
-                className={classes.spacer}
-              />
-            </Box>
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.centroid' })}
-                id="centroid"
-                name="centroid"
-                type="text"
-                onChange={checkText}
-                value={formik.values.centroid}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.footprint' })}
-                id="footprint"
-                name="footprint"
-                type="text"
-                onChange={checkText}
-                value={formik.values.footprint}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.time_begin' })}
-                id="timeBegin"
-                name="timeBegin"
-                type="text"
-                onChange={checkText}
-                value={formik.values.timeBegin.toISOString()}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.time_end' })}
-                id="timeEnd"
-                name="timeEnd"
-                type="text"
-                onChange={checkText}
-                value={formik.values.timeEnd.toISOString()}
-                className={classes.spacer}
-              />
-            </Box>
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.sensor_type' })}
-                id="sensorType"
-                name="sensorType"
-                type="text"
-                onChange={checkText}
-                value={formik.values.sensorType}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.region' })}
-                id="region"
-                name="region"
-                type="text"
-                onChange={checkText}
-                value={formik.values.sensorType}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.nominal_resolution' })}
-                id="nominalResolution"
-                name="nominalResolution"
-                type="text"
-                onChange={checkText}
-                value={formik.values.nominalResolution}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.accuracy_le90' })}
-                id="accuracyLE90"
-                name="accuracyLE90"
-                type="text"
-                onChange={checkText}
-                value={formik.values.accuracyLE90}
-                className={classes.spacer}
-              />
-            </Box>
-          </Box>
-          <Box style={{ display: 'flex', marginBottom: '16px' }}>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.horizontal_accuracy_ce90' })}
-                id="horizontalAccuracyCE90"
-                name="horizontalAccuracyCE90"
-                type="text"
-                onChange={checkText}
-                value={formik.values.horizontalAccuracyCE90}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.relative_accuracy_le90' })}
-                id="relativeAccuracyLE90"
-                name="relativeAccuracyLE90"
-                type="text"
-                onChange={checkText}
-                value={formik.values.relativeAccuracyLE90}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.estimated_precision' })}
-                id="estimatedPrecision"
-                name="estimatedPrecision"
-                type="text"
-                onChange={checkText}
-                value={formik.values.estimatedPrecision}
-                className={classes.spacer}
-              />
-            </Box>
-            <Box style={{ display: 'flex', marginBottom: '16px' }}>
-              <TextField
-                label={intl.formatMessage({ id: 'load.dialog.field.measured_precision' })}
-                id="measuredPrecision"
-                name="measuredPrecision"
-                type="text"
-                onChange={checkText}
-                value={formik.values.measuredPrecision}
-                className={classes.spacer}
-              />
+            <Box className={classes.textFields}>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.accuracy_le90' })}
+                  id="accuracyLE90"
+                  name="accuracyLE90"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.accuracyLE90}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.horizontal_accuracy_ce90' })}
+                  id="horizontalAccuracyCE90"
+                  name="horizontalAccuracyCE90"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.horizontalAccuracyCE90}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.relative_accuracy_le90' })}
+                  id="relativeAccuracyLE90"
+                  name="relativeAccuracyLE90"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.relativeAccuracyLE90}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.estimated_precision' })}
+                  id="estimatedPrecision"
+                  name="estimatedPrecision"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.estimatedPrecision}
+                  className={classes.spacer}
+                />
+              </Box>
+              <Box className={classes.textFields}>
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.measured_precision' })}
+                  id="measuredPrecision"
+                  name="measuredPrecision"
+                  type="text"
+                  onChange={checkText}
+                  value={formik.values.measuredPrecision}
+                  className={classes.spacer}
+                />
+              </Box>
             </Box>
           </Box>
 
-          <Box style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px', gap: '16px' }}>
+          <Box className={classes.buttons}>
             {
               (formErrors.minMaxZooms) ?
                 <div className={classes.errorContainer}>

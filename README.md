@@ -1,6 +1,6 @@
 # 3d-model-ingestion-client
 
-React app written in typescript to load new 3D models.<br/>
+React app written in typescript to ingest new 3D models.<br/>
 
 This project was bootstrapped with [create-react-app](https://github.com/facebook/create-react-app).
 
