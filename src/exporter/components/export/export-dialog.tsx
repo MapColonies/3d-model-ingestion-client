@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Dialog, DialogTitle, DialogContent, TextField, Button, Grid, GridCell, GridRow } from '@map-colonies/react-core';
+import { Dialog, DialogTitle, DialogContent, TextField, Button } from '@map-colonies/react-core';
 import { Box } from '@map-colonies/react-components';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { observer } from 'mobx-react-lite';
@@ -75,38 +75,38 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   const intl = useIntl();
   const formik = useFormik({
     initialValues: {
-      modelPath: '/tmp/tilesets',
+      modelPath: '/tmp/tilesets/TilesetWithDiscreteLOD',
       tilesetFilename: 'tileset.json',
-      identifier: '',
-      typename: '',
-      schema: '',
-      mdSource: '',
-      xml: '',
-      anytext: '',
+      identifier: 'xxx',
+      typename: 'xxx',
+      schema: 'xxx',
+      mdSource: 'xxx',
+      xml: 'xxx',
+      anytext: 'xxx',
       insertDate: new Date(),
       creationDate: new Date(),
       validationDate: new Date(),
-      wktGeometry: '',
-      title: '',
+      wktGeometry: 'POINT(0 0)',
+      title: 'xxx',
       producerName: 'IDFMU',
-      description: '',
-      type: '',
-      classification: '',
-      srs: '',
-      projectName: '',
-      version: '',
-      centroid: '',
-      footprint: '',
+      description: 'xxx',
+      type: 'xxx',
+      classification: 'xxx',
+      srs: 'xxx',
+      projectName: 'xxx',
+      version: 'xxx',
+      centroid: 'xxx',
+      footprint: 'xxx',
       timeBegin: new Date(),
       timeEnd: new Date(),
-      sensorType: '',
-      region: '',
-      nominalResolution: '',
-      accuracyLE90: '',
-      horizontalAccuracyCE90: '',
-      relativeAccuracyLE90: '',
-      estimatedPrecision: '',
-      measuredPrecision: ''
+      sensorType: 'xxx',
+      region: 'xxx',
+      nominalResolution: 'xxx',
+      accuracyLE90: 'xxx',
+      horizontalAccuracyCE90: 'xxx',
+      relativeAccuracyLE90: 'xxx',
+      estimatedPrecision: 'xxx',
+      measuredPrecision: 'xxx'
     },
     onSubmit: values => {
       void handleExport({
@@ -145,10 +145,6 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
       });
     },
   });
-  // eslint-disable-next-line
-  const [numTiles, setNumTiles] = useState<number>(0);
-  // eslint-disable-next-line
-  const [pixelSize, setPixelSize] = useState<number | string>(0);
 
   const [formErrors, setFormErrors] = useState({ minMaxZooms: '' });
   const [serverErrors, setServerErrors] = useState({ duplicate: '' });

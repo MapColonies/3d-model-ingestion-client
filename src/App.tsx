@@ -5,7 +5,6 @@ import './App.css';
 // Import from react core components
 import { ThemeProvider as RMWCThemeProvider, RMWCProvider, Themes } from '@map-colonies/react-core';
 import { CssBaseline } from '@map-colonies/react-components';
-import { useMediaQuery } from '@map-colonies/react-components';
 import '@map-colonies/react-core/dist/theme/styles';
 import '@map-colonies/react-core/dist/button/styles';
 import '@map-colonies/react-core/dist/tooltip/styles';
@@ -24,7 +23,7 @@ import MESSAGES from './common/i18n';
 import EXPORTER_CONFIG from './common/config';
 
 const App: React.FC = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [lang, setLang] = useState(EXPORTER_CONFIG.I18N.DEFAULT_LANGUAGE as string);
   const theme = Themes.lightTheme;//TODO: when dark theme will be tuned use this --> prefersDarkMode ? Themes.darkTheme : Themes.lightTheme;
   

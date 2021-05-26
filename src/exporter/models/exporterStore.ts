@@ -1,14 +1,12 @@
 /* eslint-disable camelcase */
-import { types, Instance, flow, getParent, getSnapshot } from 'mobx-state-tree';
+import { types, Instance, flow, getParent } from 'mobx-state-tree';
 import { AxiosRequestConfig, AxiosError } from 'axios';
 import { ApiHttpResponse } from '../../common/models/api-response';
 import { ResponseState } from '../../common/models/ResponseState';
 import { ExportStoreError } from '../../common/models/exportStoreError';
-import EXPORTER_CONFIG from '../../common/config';
 import { searchParams } from './search-params';
 import { IRootStore } from './rootStore';
 import { IExportTaskStatus } from './exportTaskStatus';
-import { model } from 'mobx-state-tree/dist/internal';
 
 export type ExportTaskStatusResponse = IExportTaskStatus[];
 export interface ExportResult {
@@ -81,24 +79,19 @@ export const exporterStore = types
       modelInfo: ModelInfo
     ): Generator<Promise<ExporterResponse>, void, ExporterResponse> {
       self.state = ResponseState.PENDING;
-      const snapshot = getSnapshot(self.searchParams);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const params: Record<string, unknown> = {};
-      // Get the source layer name
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const sourceLayer: string = EXPORTER_CONFIG.ACTIVE_LAYER_PROPERTIES.urlPatternParams.layers as string;
       // Prepare body data for request
-      const { modelPath, tilesetFilename, ...rest } = modelInfo;
+      const params: Record<string, unknown> = {};
+      const { modelPath, tilesetFilename, ...metadata } = modelInfo;
       params.modelPath = modelPath;
       params.tilesetFilename = tilesetFilename;
-      params.metadata = rest;
+      params.metadata = metadata;
 
       try {
-        const result = yield self.root.fetch(
+        /*const result = */yield self.root.fetch(
+          'http://localhost:8082',
           '/models',
           'POST',
-          params,
-          'http://localhost:8082'
+          params
         );
         // const responseBody = result.data.data;
         self.state = ResponseState.DONE;
@@ -135,7 +128,7 @@ export const exporterStore = types
       > {
         try {
           self.state = ResponseState.IDLE;
-          const result = yield self.root.fetch('/jobs', 'GET', {}, 'http://localhost:8081');
+          const result = yield self.root.fetch('http://localhost:8081', '/jobs', 'GET', {});
           // const result = yield Promise.resolve(MOCK_EXPORTED_PACKAGES);
           self.exportedPackages = result;
         } catch (e) {

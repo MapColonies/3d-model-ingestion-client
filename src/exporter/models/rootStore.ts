@@ -5,10 +5,10 @@ import { ResponseState } from '../../common/models/ResponseState';
 import { exporterStore, ExporterResponse } from './exporterStore';
 
 type FetchAction = (
+  baseURL: string,
   url: string,
   method: Method,
-  params: Record<string, unknown>,
-  baseURL: string
+  params: Record<string, unknown>
 ) => Promise<ExporterResponse>;
 
 export const baseRootStore = types

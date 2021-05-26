@@ -3,19 +3,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 import { observer } from 'mobx-react-lite';
 import { AgGridReact } from 'ag-grid-react';
-import {
-  ColDef,
-  ICellRendererParams,
-  GridReadyEvent,
-  GridApi,
-  ValueGetterParams,
-} from 'ag-grid-community';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Button,
-} from '@map-colonies/react-core';
+import { ColDef, ICellRendererParams, GridReadyEvent, GridApi } from 'ag-grid-community';
+import { Dialog, DialogTitle, DialogContent, Button } from '@map-colonies/react-core';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Box } from '@map-colonies/react-components';

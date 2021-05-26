@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Polygon } from 'geojson';
 import { DrawType } from  '@map-colonies/react-components';
 import { BBoxAreaLimit, isBBoxWithinLimit } from '../../../common/helpers/bbox-area';
-import { PolygonSelectionUi } from './polygon-selection-ui';
 import { MapWrapper } from './map-wrapper';
 import './map-container.css';
 
@@ -29,10 +28,6 @@ export const MapContainer: React.FC<MapContainerProps> = (
 
     setDrawType(undefined);
     props.handlePolygonSelected(polygon);
-  };
-
-  const onReset = (): void => {
-    props.handlePolygonReset();
   };
 
   return (
