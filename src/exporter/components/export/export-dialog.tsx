@@ -88,7 +88,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
       validationDate: new Date(),
       wktGeometry: '',
       title: '',
-      producerName: '',
+      producerName: 'IDFMU',
       description: '',
       type: '',
       classification: '',

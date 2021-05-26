@@ -30,7 +30,7 @@ export interface ModelInfo {
   validationDate?: Date;
   wktGeometry?: string;
   title?: string;
-  producerName: string; // IDFMU
+  producerName: string;
   description: string;
   type: string;
   classification: string;
@@ -88,38 +88,10 @@ export const exporterStore = types
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const sourceLayer: string = EXPORTER_CONFIG.ACTIVE_LAYER_PROPERTIES.urlPatternParams.layers as string;
       // Prepare body data for request
-      params.modelPath = modelInfo.modelPath;
-      params.tilesetFilename = modelInfo.tilesetFilename;
-      params.identifier = modelInfo.identifier;
-      params.typename = modelInfo.typename;
-      params.schema = modelInfo.schema;
-      params.mdSource = modelInfo.mdSource;
-      params.xml = modelInfo.xml;
-      params.anytext = modelInfo.anytext;
-      params.insertDate = modelInfo.insertDate;
-      params.creationDate = modelInfo.creationDate;
-      params.validationDate = modelInfo.validationDate;
-      params.wktGeometry = modelInfo.wktGeometry;
-      params.title = modelInfo.title;
-      params.producerName = modelInfo.producerName;
-      params.description = modelInfo.description;
-      params.type = modelInfo.type;
-      params.classification = modelInfo.classification;
-      params.srs = modelInfo.srs;
-      params.projectName = modelInfo.projectName;
-      params.version = modelInfo.version;
-      params.centroid = modelInfo.centroid;
-      params.footprint = modelInfo.footprint;
-      params.timeBegin = modelInfo.timeBegin;
-      params.timeEnd = modelInfo.timeEnd;
-      params.sensorType = modelInfo.sensorType;
-      params.region = modelInfo.region;
-      params.nominalResolution = modelInfo.nominalResolution;
-      params.accuracyLE90 = modelInfo.accuracyLE90;
-      params.horizontalAccuracyCE90 = modelInfo.horizontalAccuracyCE90;
-      params.relativeAccuracyLE90 = modelInfo.relativeAccuracyLE90;
-      params.estimatedPrecision = modelInfo.estimatedPrecision;
-      params.measuredPrecision = modelInfo.measuredPrecision;
+      const { modelPath, tilesetFilename, ...rest } = modelInfo;
+      params.modelPath = modelPath;
+      params.tilesetFilename = tilesetFilename;
+      params.metadata = rest;
 
       try {
         const result = yield self.root.fetch(
