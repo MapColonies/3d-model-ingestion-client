@@ -67,6 +67,7 @@
 
   "ingestion.btn.text": "+",
   "ingestion.dialog.title": "3D model ingestion",
+  "ingestion.dialog.metadata": "Metadata",
 
   "ingestion.status.btn.text": "Status",
   "ingestion.status.dialog.title": "3D model ingestion status",

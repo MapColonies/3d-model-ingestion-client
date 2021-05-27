@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { ModelInfo } from '../../models/exporterStore';
 import { ExportStoreError } from '../../../common/models/exportStoreError';
 import { useStore } from '../../models/rootStore';
+import { NotchLabel } from './notch-label';
 
 const FIRST_CHAR_IDX = 0;
 const useStyle = makeStyles((theme: Theme) =>
@@ -37,6 +38,12 @@ const useStyle = makeStyles((theme: Theme) =>
       borderRadius: '10px',
       border: '1px solid lightgray',
       padding: '20px'
+    },
+    metadataLabel: {
+      display: 'block',
+      position: 'absolute',
+      left: '47px',
+      top: '161px'
     },
     textFields: {
       display: 'flex',
@@ -73,19 +80,20 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   const { isOpen, onSetOpen, handleExport } = props;
   const classes = useStyle();
   const intl = useIntl();
+  const currentDate = new Date();
   const formik = useFormik({
     initialValues: {
       modelPath: '/tmp/tilesets/TilesetWithDiscreteLOD',
       tilesetFilename: 'tileset.json',
       identifier: 'xxx',
-      typename: 'xxx',
-      schema: 'xxx',
-      mdSource: 'xxx',
-      xml: 'xxx',
-      anytext: 'xxx',
-      insertDate: new Date(),
-      creationDate: new Date(),
-      validationDate: new Date(),
+      typename: 'typename',
+      schema: 'schema',
+      mdSource: 'mdSource',
+      xml: 'xml',
+      anytext: 'anytext',
+      insertDate: currentDate,
+      creationDate: currentDate,
+      validationDate: currentDate,
       wktGeometry: 'POINT(0 0)',
       title: 'xxx',
       producerName: 'IDFMU',
@@ -97,8 +105,8 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
       version: 'xxx',
       centroid: 'xxx',
       footprint: 'xxx',
-      timeBegin: new Date(),
-      timeEnd: new Date(),
+      timeBegin: currentDate,
+      timeEnd: currentDate,
       sensorType: 'xxx',
       region: 'xxx',
       nominalResolution: 'xxx',
@@ -201,6 +209,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
             </Box>
           </Box>
           <Box className={classes.metadata}>
+            <Box className={classes.metadataLabel}>
+              <NotchLabel text={intl.formatMessage({ id: 'ingestion.dialog.metadata' })} />
+            </Box>
             <Box className={classes.textFields}>
               <Box className={classes.textFields}>
                 <TextField

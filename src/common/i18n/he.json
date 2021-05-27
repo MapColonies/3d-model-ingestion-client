@@ -67,6 +67,7 @@
   
   "ingestion.btn.text": "+",
   "ingestion.dialog.title": "העלאת מודל תלת-מימד",
+  "ingestion.dialog.metadata": "מידע אודות המודל",
 
   "ingestion.status.btn.text": "סטטוס",
   "ingestion.status.dialog.title": "סטטוס תהליך העלאת המודל",
