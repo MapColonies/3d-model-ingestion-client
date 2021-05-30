@@ -83,7 +83,7 @@
   "ingestion.dialog.field.insert_date": "Insert date",
   "ingestion.dialog.field.creation_date": "Creation date",
   "ingestion.dialog.field.validation_date": "Validation date",
-  "ingestion.dialog.field.wkt_geometry": "Well-Known-Text geometry",
+  "ingestion.dialog.field.wkt_geometry": "WKT geometry",
   "ingestion.dialog.field.title": "Title",
   "ingestion.dialog.field.producer_name": "Producer name",
   "ingestion.dialog.field.description": "Description",

@@ -224,74 +224,54 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   className={classes.spacer}
                 />
               </Box>
-              <Box className={classes.textFields}>
-                <TextField
-                  label={intl.formatMessage({ id: 'ingestion.dialog.field.typename' })}
-                  id="typename"
-                  name="typename"
-                  type="text"
-                  onChange={checkText}
-                  value={formik.values.typename}
-                  className={classes.spacer}
-                />
-              </Box>
-              <Box className={classes.textFields}>
-                <TextField
-                  label={intl.formatMessage({ id: 'ingestion.dialog.field.schema' })}
-                  id="schema"
-                  name="schema"
-                  type="text"
-                  onChange={checkText}
-                  value={formik.values.schema}
-                  className={classes.spacer}
-                />
-              </Box>
-              <Box className={classes.textFields}>
-                <TextField
-                  label={intl.formatMessage({ id: 'ingestion.dialog.field.md_source' })}
-                  id="mdSource"
-                  name="mdSource"
-                  type="text"
-                  onChange={checkText}
-                  value={formik.values.mdSource}
-                  className={classes.spacer}
-                />
-              </Box>
-              <Box className={classes.textFields}>
-                <TextField
-                  label={intl.formatMessage({ id: 'ingestion.dialog.field.xml' })}
-                  id="xml"
-                  name="xml"
-                  type="text"
-                  onChange={checkText}
-                  value={formik.values.xml}
-                  className={classes.spacer}
-                />
-              </Box>
-            </Box>
-            <Box className={classes.textFields}>
-              <Box className={classes.textFields}>
-                <TextField
-                  label={intl.formatMessage({ id: 'ingestion.dialog.field.anytext' })}
-                  id="anytext"
-                  name="anytext"
-                  type="text"
-                  onChange={checkText}
-                  value={formik.values.anytext}
-                  className={classes.spacer}
-                />
-              </Box>
-              <Box className={classes.textFields}>
-                <TextField
-                  label={intl.formatMessage({ id: 'ingestion.dialog.field.insert_date' })}
-                  id="insertDate"
-                  name="insertDate"
-                  type="text"
-                  onChange={checkText}
-                  value={formik.values.insertDate.toISOString()}
-                  className={classes.spacer}
-                />
-              </Box>
+              <TextField
+                label={intl.formatMessage({ id: 'ingestion.dialog.field.typename' })}
+                id="typename"
+                name="typename"
+                type="hidden"
+                onChange={checkText}
+                value={formik.values.typename}
+              />
+              <TextField
+                label={intl.formatMessage({ id: 'ingestion.dialog.field.schema' })}
+                id="schema"
+                name="schema"
+                type="hidden"
+                onChange={checkText}
+                value={formik.values.schema}
+              />
+              <TextField
+                label={intl.formatMessage({ id: 'ingestion.dialog.field.md_source' })}
+                id="mdSource"
+                name="mdSource"
+                type="hidden"
+                onChange={checkText}
+                value={formik.values.mdSource}
+              />
+              <TextField
+                label={intl.formatMessage({ id: 'ingestion.dialog.field.xml' })}
+                id="xml"
+                name="xml"
+                type="hidden"
+                onChange={checkText}
+                value={formik.values.xml}
+              />
+              <TextField
+                label={intl.formatMessage({ id: 'ingestion.dialog.field.anytext' })}
+                id="anytext"
+                name="anytext"
+                type="hidden"
+                onChange={checkText}
+                value={formik.values.anytext}
+              />
+              <TextField
+                label={intl.formatMessage({ id: 'ingestion.dialog.field.insert_date' })}
+                id="insertDate"
+                name="insertDate"
+                type="hidden"
+                onChange={checkText}
+                value={formik.values.insertDate.toISOString()}
+              />
               <Box className={classes.textFields}>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.creation_date' })}
@@ -371,6 +351,8 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   className={classes.spacer}
                 />
               </Box>
+            </Box>
+            <Box className={classes.textFields}>
               <Box className={classes.textFields}>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.classification' })}
@@ -382,8 +364,6 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   className={classes.spacer}
                 />
               </Box>
-            </Box>
-            <Box className={classes.textFields}>
               <Box className={classes.textFields}>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.srs' })}
@@ -417,6 +397,8 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   className={classes.spacer}
                 />
               </Box>
+            </Box>
+            <Box className={classes.textFields}>
               <Box className={classes.textFields}>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.centroid' })}
@@ -439,8 +421,6 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   className={classes.spacer}
                 />
               </Box>
-            </Box>
-            <Box className={classes.textFields}>
               <Box className={classes.textFields}>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.time_begin' })}
@@ -463,6 +443,8 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   className={classes.spacer}
                 />
               </Box>
+            </Box>
+            <Box className={classes.textFields}>
               <Box className={classes.textFields}>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.sensor_type' })}
@@ -496,8 +478,6 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   className={classes.spacer}
                 />
               </Box>
-            </Box>
-            <Box className={classes.textFields}>
               <Box className={classes.textFields}>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.accuracy_le90' })}
@@ -509,6 +489,8 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   className={classes.spacer}
                 />
               </Box>
+            </Box>
+            <Box className={classes.textFields}>
               <Box className={classes.textFields}>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.horizontal_accuracy_ce90' })}
