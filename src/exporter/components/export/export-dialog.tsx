@@ -560,7 +560,8 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
             </Button>
             <Button raised type="submit" disabled={!!formErrors.minMaxZooms || !!serverErrors.duplicate || 
               !formik.values.modelPath ||
-              !formik.values.tilesetFilename}>
+              !formik.values.tilesetFilename ||
+              !formik.values.identifier}>
               <FormattedMessage id="general.ok-btn.text" />
             </Button>
           </Box>
