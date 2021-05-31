@@ -43,7 +43,7 @@ describe('ExportStatusTable component', () => {
 
   it('exported packages fetched during component lifecycle', async () => {
     const mockStore = rootStore.create({}, { fetch: packagesFetcher });
-    const getGeoPackagesMock = jest.spyOn(mockStore.exporterStore, "getGeoPackages");
+    const getJobsMock = jest.spyOn(mockStore.exporterStore, "getJobs");
         
     const wrapper = mount(
       <StoreProvider value={mockStore}>
@@ -63,8 +63,8 @@ describe('ExportStatusTable component', () => {
     });
   
     await waitFor(() => {
-      expect(getGeoPackagesMock).toHaveBeenCalled();
-      getGeoPackagesMock.mockRestore();
+      expect(getJobsMock).toHaveBeenCalled();
+      getJobsMock.mockRestore();
     });
   });
 

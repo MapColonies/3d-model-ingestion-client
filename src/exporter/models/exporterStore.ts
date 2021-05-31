@@ -120,8 +120,8 @@ export const exporterStore = types
         self.state = ResponseState.ERROR;
       }
     });
-    const getGeoPackages: () => Promise<void> = flow(
-      function* getGeoPackages(): Generator<
+    const getJobs: () => Promise<void> = flow(
+      function* getJobs(): Generator<
         Promise<ExporterResponse>,
         void,
         ExportTaskStatusResponse
@@ -169,7 +169,7 @@ export const exporterStore = types
 
     return {
       startExportGeoPackage,
-      getGeoPackages,
+      getJobs,
       addError,
       hasError,
       hasErrors,

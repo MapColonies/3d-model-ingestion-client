@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Dialog, DialogTitle, DialogContent, TextField, Button } from '@map-colonies/react-core';
 import { Box } from '@map-colonies/react-components';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { observer } from 'mobx-react-lite';
 import { ModelInfo } from '../../models/exporterStore';
 import { ExportStoreError } from '../../../common/models/exportStoreError';
@@ -13,6 +13,7 @@ import { NotchLabel } from './notch-label';
 import './export-dialog.css';
 
 const FIRST_CHAR_IDX = 0;
+
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     dialog: {
@@ -74,6 +75,18 @@ const useStyle = makeStyles((theme: Theme) =>
   })
 );
 
+const validate = (values: ModelInfo, intl: IntlShape): GeometryError => {
+  const errors: GeometryError = { geometryFormat: '' };
+  
+  // eslint-disable-next-line
+  if (values.wktGeometry != undefined &&
+    !new RegExp('POINT|LINESTRING|POLYGON|MULTIPOINT|MULTILINESTRING|MULTIPOLYGON|GEOMETRYCOLLECTION|TRIANGLE|TIN|POLYHEDRALSURFACE').test(values.wktGeometry)) {
+    errors.geometryFormat = intl.formatMessage({ id: 'ingestion.dialog.form-error.invalid.geometry' });
+  }
+
+  return errors;
+};
+
 // eslint-disable-next-line
 const isValidText = (e: React.ChangeEvent<any>): boolean => {
   // eslint-disable-next-line
@@ -81,7 +94,7 @@ const isValidText = (e: React.ChangeEvent<any>): boolean => {
   if (!data)
     return true;
 
-  const charIdx = data.search(/[a-zA-Z0-9-_)]+/i);
+  const charIdx = data.search(/[a-zA-Z0-9-_.)]+/i);
   return (charIdx === FIRST_CHAR_IDX);
 };
 
@@ -89,6 +102,10 @@ interface ExportDialogProps {
   isOpen: boolean;
   onSetOpen: (open: boolean) => void;
   handleExport: (modelInfo: ModelInfo) => void;
+}
+
+interface GeometryError {
+  geometryFormat: string;
 }
 
 export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
@@ -133,44 +150,49 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
       measuredPrecision: 'xxx'
     },
     onSubmit: values => {
-      void handleExport({
-        modelPath: formik.values.modelPath,
-        tilesetFilename: formik.values.tilesetFilename,
-        identifier: formik.values.identifier,
-        typename: formik.values.typename,
-        schema: formik.values.schema,
-        mdSource: formik.values.mdSource,
-        xml: formik.values.xml,
-        anytext: formik.values.anytext,
-        insertDate: formik.values.insertDate,
-        creationDate: formik.values.creationDate,
-        validationDate: formik.values.validationDate,
-        wktGeometry: formik.values.wktGeometry,
-        title: formik.values.title,
-        producerName: formik.values.producerName,
-        description: formik.values.description,
-        type: formik.values.type,
-        classification: formik.values.classification,
-        srs: formik.values.srs,
-        projectName: formik.values.projectName,
-        version: formik.values.version,
-        centroid: formik.values.centroid,
-        footprint: formik.values.footprint,
-        timeBegin: formik.values.timeBegin,
-        timeEnd: formik.values.timeEnd,
-        sensorType: formik.values.sensorType,
-        region: formik.values.region,
-        nominalResolution: formik.values.nominalResolution,
-        accuracyLE90: formik.values.accuracyLE90,
-        horizontalAccuracyCE90: formik.values.horizontalAccuracyCE90,
-        relativeAccuracyLE90: formik.values.relativeAccuracyLE90,
-        estimatedPrecision: formik.values.estimatedPrecision,
-        measuredPrecision: formik.values.measuredPrecision
-      });
+      const err = validate(values, intl);
+      if (!err.geometryFormat) {
+        void handleExport({
+          modelPath: formik.values.modelPath,
+          tilesetFilename: formik.values.tilesetFilename,
+          identifier: formik.values.identifier,
+          typename: formik.values.typename,
+          schema: formik.values.schema,
+          mdSource: formik.values.mdSource,
+          xml: formik.values.xml,
+          anytext: formik.values.anytext,
+          insertDate: formik.values.insertDate,
+          creationDate: formik.values.creationDate,
+          validationDate: formik.values.validationDate,
+          wktGeometry: formik.values.wktGeometry,
+          title: formik.values.title,
+          producerName: formik.values.producerName,
+          description: formik.values.description,
+          type: formik.values.type,
+          classification: formik.values.classification,
+          srs: formik.values.srs,
+          projectName: formik.values.projectName,
+          version: formik.values.version,
+          centroid: formik.values.centroid,
+          footprint: formik.values.footprint,
+          timeBegin: formik.values.timeBegin,
+          timeEnd: formik.values.timeEnd,
+          sensorType: formik.values.sensorType,
+          region: formik.values.region,
+          nominalResolution: formik.values.nominalResolution,
+          accuracyLE90: formik.values.accuracyLE90,
+          horizontalAccuracyCE90: formik.values.horizontalAccuracyCE90,
+          relativeAccuracyLE90: formik.values.relativeAccuracyLE90,
+          estimatedPrecision: formik.values.estimatedPrecision,
+          measuredPrecision: formik.values.measuredPrecision
+        });
+      } else {
+        setFormErrors(err);
+      }
     },
   });
 
-  const [formErrors, setFormErrors] = useState({ minMaxZooms: '' });
+  const [formErrors, setFormErrors] = useState({ geometryFormat: '' });
   const [serverErrors, setServerErrors] = useState({ duplicate: '' });
 
   const handleClose = (isOpened: boolean): void => {
@@ -179,7 +201,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
 
   // eslint-disable-next-line
   const checkText = (e: React.ChangeEvent<any>) => {
-
+    setFormErrors({ geometryFormat: '' });
     if (serverErrors.duplicate) {
       setServerErrors({ ...serverErrors, duplicate: '' });
     }
@@ -194,7 +216,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   }, [exporterStore, exporterStore.errors, serverErrors]);
 
   return (
-    <Box id="ingest_3d_model">
+    <Box id="ingestionDialog">
       <Dialog open={isOpen} preventOutsideDismiss={true}>
         <DialogTitle>
           <FormattedMessage id="ingestion.dialog.title" />
@@ -344,6 +366,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                     onChange={checkText}
                     value={formik.values.producerName}
                     className={classes.textField}
+                    disabled
                   />
                 </Box>
               </Box>
@@ -354,7 +377,6 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                     id="description"
                     name="description"
                     type="text"
-                    onChange={checkText}
                     value={formik.values.description}
                     className={classes.textField}
                   />
@@ -558,12 +580,12 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                 </Box>
               </Box>
             </Box>
-
+            
             <Box className={classes.buttons}>
               {
-                (formErrors.minMaxZooms) ?
+                (formErrors.geometryFormat) ?
                   <div className={classes.errorContainer}>
-                    {`${intl.formatMessage({ id: 'general.error.label' })}: ${formErrors.minMaxZooms}`}
+                    {`${intl.formatMessage({ id: 'general.error.label' })}: ${formErrors.geometryFormat}`}
                   </div> :
                   null
               }
@@ -579,7 +601,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
               <Button type="button" onClick={(): void => { handleClose(false); }}>
                 <FormattedMessage id="general.cancel-btn.text" />
               </Button>
-              <Button raised type="submit" disabled={!!formErrors.minMaxZooms || !!serverErrors.duplicate || 
+              <Button raised type="submit" disabled={!!formErrors.geometryFormat || !!serverErrors.duplicate || 
                 !formik.values.modelPath ||
                 !formik.values.tilesetFilename ||
                 !formik.values.identifier}>

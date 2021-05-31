@@ -261,10 +261,10 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
     useEffect(() => {
       let pollingInterval: NodeJS.Timeout;
       if (isOpen) {
-        void exporterStore.getGeoPackages();
+        void exporterStore.getJobs();
         pollingInterval = setInterval(() => {
           setPollingCycle(pollingCycle + 1);
-          void exporterStore.getGeoPackages();
+          void exporterStore.getJobs();
         }, EXPORTER_CONFIG.EXPORT.POLLING_CYCLE_INTERVAL);
       }
 

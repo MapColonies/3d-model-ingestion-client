@@ -13,7 +13,7 @@ describe('Exporter Store', () => {
       Promise.resolve<ExportTaskStatusResponse>(exportedPackages);
     const { exporterStore } = rootStore.create({}, { fetch: packagesFetcher });
 
-    await exporterStore.getGeoPackages();
+    await exporterStore.getJobs();
 
     const result: ExportTaskStatusResponse = exporterStore.exportedPackages as ExportTaskStatusResponse;
 
