@@ -73,9 +73,9 @@
   "ingestion.status.btn.text": "Status",
   "ingestion.status.dialog.title": "3D model ingestion status",
 
-  "ingestion.dialog.field.model_path": "Model path (full path)",
-  "ingestion.dialog.field.tileset_filename": "Tileset filename",
-  "ingestion.dialog.field.identifier": "Identifier",
+  "ingestion.dialog.field.model_path": "Model path (full path) *",
+  "ingestion.dialog.field.tileset_filename": "Tileset filename *",
+  "ingestion.dialog.field.identifier": "Identifier *",
   "ingestion.dialog.field.typename": "Typename",
   "ingestion.dialog.field.schema": "Schema",
   "ingestion.dialog.field.md_source": "MD Source",

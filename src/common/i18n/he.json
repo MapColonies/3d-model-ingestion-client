@@ -73,9 +73,9 @@
   "ingestion.status.btn.text": "סטטוס",
   "ingestion.status.dialog.title": "סטטוס תהליך העלאת המודל",
 
-  "ingestion.dialog.field.model_path": "נתיב לקבצי המודל (נתיב מלא)",
-  "ingestion.dialog.field.tileset_filename": "שם הקובץ הראשי של המודל",
-  "ingestion.dialog.field.identifier": "מזהה ייחודי (בפורמט UUID)",
+  "ingestion.dialog.field.model_path": "נתיב לקבצי המודל (נתיב מלא) *",
+  "ingestion.dialog.field.tileset_filename": "שם הקובץ הראשי של המודל *",
+  "ingestion.dialog.field.identifier": "מזהה ייחודי (בפורמט UUID) *",
   "ingestion.dialog.field.typename": "שם סוג",
   "ingestion.dialog.field.schema": "סכמה",
   "ingestion.dialog.field.md_source": "מקור MD",
