@@ -20,10 +20,20 @@ const useStyle = makeStyles((theme: Theme) =>
       maxWidth: 'none',
       background: 'blue'
     },
+    title: {
+      borderBottom: '1px solid lightgray'
+    },
+    formError: {
+      display: 'block',
+      position: 'relative',
+      color: theme.palette.error.main,
+      fontSize: '14px',
+      top: '-32px',
+      left: '22px'
+    },
     errorContainer: {
       display: 'flex',
-      alignItems: 'center',
-      marginRight: 'auto',
+      justifyContent: 'center',
       color: theme.palette.error.main
     },
     noBorder: {
@@ -35,6 +45,9 @@ const useStyle = makeStyles((theme: Theme) =>
     infoLabel: {
       width: '110px'
     },
+    modelPathAndTileset: {
+      display: 'flex'
+    },
     metadata: {
       justifyContent: 'space-around',
       borderRadius: '10px',
@@ -44,8 +57,8 @@ const useStyle = makeStyles((theme: Theme) =>
     metadataLabel: {
       display: 'block',
       position: 'relative',
-      left: '0px',
-      top: '-32px'
+      left: '23px',
+      top: '13px'
     },
     textFieldBox: {
       display: 'flex',
@@ -71,6 +84,9 @@ const useStyle = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end',
       marginTop: '16px',
       gap: '16px'
+    },
+    noScrollbar: {
+      overflow: 'hidden'
     }
   })
 );
@@ -218,12 +234,12 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   return (
     <Box id="ingestionDialog">
       <Dialog open={isOpen} preventOutsideDismiss={true}>
-        <DialogTitle>
+        <DialogTitle className={classes.title}>
           <FormattedMessage id="ingestion.dialog.title" />
         </DialogTitle>
-        <DialogContent>
+        <DialogContent className={classes.noScrollbar}>
           <form onSubmit={formik.handleSubmit}>
-            <Box className={classes.textFieldBox}>
+            <Box className={classes.modelPathAndTileset}>
               <Box className={classes.textFieldBox}>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.model_path' })}
@@ -247,10 +263,10 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                 />
               </Box>
             </Box>
+            <Box className={classes.metadataLabel}>
+              <NotchLabel text={intl.formatMessage({ id: 'ingestion.dialog.metadata' })} />
+            </Box>
             <Box className={classes.metadata}>
-              <Box className={classes.metadataLabel}>
-                <NotchLabel text={intl.formatMessage({ id: 'ingestion.dialog.metadata' })} />
-              </Box>
               <Box className={classes.textFieldBox}>
                 <Box className={classes.textFieldBox}>
                   <TextField
@@ -363,13 +379,17 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                     id="producerName"
                     name="producerName"
                     type="text"
-                    onChange={checkText}
-                    value={formik.values.producerName}
-                    className={classes.textField}
-                    disabled
+                    defaultValue={formik.values.producerName}
+                    className={`${classes.textField} ${classes.readOnly}`}
+                    readOnly
                   />
                 </Box>
               </Box>
+              {
+                (formErrors.geometryFormat) ?
+                <div className={classes.formError}>{formErrors.geometryFormat}</div> : 
+                null
+              }
               <Box className={classes.textFieldBox}>
                 <Box className={classes.textFieldBox}>
                   <TextField
@@ -579,16 +599,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   />
                 </Box>
               </Box>
-            </Box>
-            
-            <Box className={classes.buttons}>
-              {
-                (formErrors.geometryFormat) ?
-                  <div className={classes.errorContainer}>
-                    {`${intl.formatMessage({ id: 'general.error.label' })}: ${formErrors.geometryFormat}`}
-                  </div> :
-                  null
-              }
+
               {
                 Object.entries(serverErrors).map(([error, value], index) => {
                   return value ?
@@ -598,6 +609,10 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   null
                 })
               }
+
+            </Box>
+            
+            <Box className={classes.buttons}>
               <Button type="button" onClick={(): void => { handleClose(false); }}>
                 <FormattedMessage id="general.cancel-btn.text" />
               </Button>
