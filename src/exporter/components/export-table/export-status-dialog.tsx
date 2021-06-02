@@ -62,36 +62,57 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
     useEffect(() => {
       setColDef([
         {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.fileName.text',
-          }),
-          width: 200,
-          field: 'fileName',
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.id' }),
+          width: 320,
+          field: 'id',
           suppressMovable: true,
         },
         {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.status.text',
-          }),
-          width: 120,
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.resourceId' }),
+          width: 320,
+          field: 'resourceId',
+          suppressMovable: true,
+        },
+        {
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.version' }),
+          width: 100,
+          field: 'version',
+          suppressMovable: true,
+        },
+        {
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.type' }),
+          width: 140,
+          field: 'type',
+          suppressMovable: true,
+        },
+        {
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.description' }),
+          width: 200,
+          field: 'description',
+          suppressMovable: true,
+        },
+        {
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.status' }),
+          width: 150,
           field: 'status',
           suppressMovable: true,
         },
         {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.link.text',
-          }),
-          width: 120,
-          field: 'link',
-          cellRenderer: 'linkRenderer',
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.reason' }),
+          width: 200,
+          field: 'reason',
           suppressMovable: true,
         },
         {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.creationDate.text',
-          }),
-          width: 170,
-          field: 'creationDate',
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.parameters' }),
+          width: 180,
+          field: 'parameters',
+          suppressMovable: true,
+        },
+        {
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.creationTime' }),
+          width: 150,
+          field: 'creationTime',
           cellRenderer: (props: ICellRendererParams): string => {
             const data = props.data as IExportTaskStatus;
             return renderDate(data.creationDate);
@@ -99,11 +120,9 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
           suppressMovable: true,
         },
         {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.lastUpdateTime.text',
-          }),
-          width: 170,
-          field: 'lastUpdateTime',
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.updateTime' }),
+          width: 150,
+          field: 'updateTime',
           cellRenderer: (props: ICellRendererParams): string => {
             const data = props.data as IExportTaskStatus;
             return renderDate(data.lastUpdateTime);
@@ -111,93 +130,10 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
           suppressMovable: true,
         },
         {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.progress.text',
-          }),
+          headerName: intl.formatMessage({ id: 'ingestion.status.field.percentage' }),
           width: 120,
-          field: 'progress',
+          field: 'percentage',
           cellRenderer: 'progressRenderer',
-          suppressMovable: true,
-        },
-        {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.maxZoom.text',
-          }),
-          width: 120,
-          field: 'maxZoom',
-          cellRenderer: (props: ICellRendererParams): string => {
-            const data = props.data as IExportTaskStatus;
-            return renderSize(data.maxZoom);
-          },
-          suppressMovable: true,
-        },
-        {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.sourceLayer.text',
-          }),
-          width: 180,
-          field: 'sourceLayer',
-          suppressMovable: true,
-        },
-        {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.sizeEst.text',
-          }),
-          width: 120,
-          field: 'sizeEst',
-          cellRenderer: (props: ICellRendererParams): string => {
-            const data = props.data as IExportTaskStatus;
-            return renderSize(data.sizeEst);
-          },
-          suppressMovable: true,
-        },
-        {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.realSize.text',
-          }),
-          width: 120,
-          field: 'realSize',
-          cellRenderer: (props: ICellRendererParams): string => {
-            const data = props.data as IExportTaskStatus;
-            return renderSize(data.realSize);
-          },
-          suppressMovable: true,
-        },
-        {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.expirationTime.text',
-          }),
-          width: 170,
-          field: 'expirationTime',
-          cellRenderer: (props: ICellRendererParams): string => {
-            const data = props.data as IExportTaskStatus;
-            return renderDate(data.expirationTime);
-          },
-          suppressMovable: true,
-        },
-        {
-          headerName: intl.formatMessage({
-            id: 'export-table.table-column-header.bbox.text',
-          }),
-          width: 800,
-          field: 'bbox',
-          cellRenderer: (props: ICellRendererParams): string => {
-            const data = props.data as IExportTaskStatus;
-            const polygon = data.polygon;
-
-            const bboxFromPolygon :IBbox = {
-              topRight: {
-                lat: polygon.coordinates[0][2][1],
-                lon: polygon.coordinates[0][2][0]
-              },
-              bottomLeft: {
-                lat: polygon.coordinates[0][0][1],
-                lon: polygon.coordinates[0][0][0]
-              }
-            }
-
-            return renderBbox(bboxFromPolygon);
-          },
           suppressMovable: true,
         },
       ]);
@@ -259,17 +195,17 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
     }, [exporterStore.exportedPackages, pollingCycle, gridApi]);
 
     useEffect(() => {
-      let pollingInterval: NodeJS.Timeout;
+      // let pollingInterval: NodeJS.Timeout;
       if (isOpen) {
         void exporterStore.getJobs();
-        pollingInterval = setInterval(() => {
+        /*pollingInterval = setInterval(() => {
           setPollingCycle(pollingCycle + 1);
           void exporterStore.getJobs();
-        }, EXPORTER_CONFIG.EXPORT.POLLING_CYCLE_INTERVAL);
+        }, EXPORTER_CONFIG.EXPORT.POLLING_CYCLE_INTERVAL);*/
       }
 
       return (): void => {
-        clearInterval(pollingInterval);
+        // clearInterval(pollingInterval);
       };
     }, [isOpen, exporterStore, pollingCycle]);
 

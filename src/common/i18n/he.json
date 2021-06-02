@@ -66,12 +66,10 @@
 
   
   "ingestion.btn.text": "+",
+
   "ingestion.dialog.title": "העלאת מודל תלת-מימד",
   "ingestion.dialog.metadata": "מידע אודות המודל",
   "ingestion.dialog.form-error.invalid.geometry": "גיאומטריה לא תקינה",
-
-  "ingestion.status.btn.text": "סטטוס",
-  "ingestion.status.dialog.title": "סטטוס תהליך העלאת המודל",
 
   "ingestion.dialog.field.model_path": "נתיב לקבצי המודל (נתיב מלא) *",
   "ingestion.dialog.field.tileset_filename": "שם הקובץ הראשי של המודל *",
@@ -104,5 +102,21 @@
   "ingestion.dialog.field.horizontal_accuracy_ce90": "דיוק אופקי CE90",
   "ingestion.dialog.field.relative_accuracy_le90": "דיוק יחסי LE90",
   "ingestion.dialog.field.estimated_precision": "דיוק משוער",
-  "ingestion.dialog.field.measured_precision": "דיוק נמדד"
+  "ingestion.dialog.field.measured_precision": "דיוק נמדד",
+
+  "ingestion.status.btn.text": "סטטוס",
+
+  "ingestion.status.dialog.title": "סטטוס תהליך העלאת המודל",
+
+  "ingestion.status.field.id": "מזהה",
+  "ingestion.status.field.resourceId": "מזהה מקור",
+  "ingestion.status.field.version": "גרסה",
+  "ingestion.status.field.type": "סוג",
+  "ingestion.status.field.description": "תיאור",
+  "ingestion.status.field.status": "סטטוס",
+  "ingestion.status.field.reason": "סיבה",
+  "ingestion.status.field.parameters": "פרמטרים",
+  "ingestion.status.field.creationTime": "זמן יצירה",
+  "ingestion.status.field.updateTime": "זמן עדכון",
+  "ingestion.status.field.percentage": "אחוז"
 }

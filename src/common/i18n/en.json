@@ -66,12 +66,10 @@
   
 
   "ingestion.btn.text": "+",
+
   "ingestion.dialog.title": "3D model ingestion",
   "ingestion.dialog.metadata": "Metadata",
   "ingestion.dialog.form-error.invalid.geometry": "Invalid geometry",
-
-  "ingestion.status.btn.text": "Status",
-  "ingestion.status.dialog.title": "3D model ingestion status",
 
   "ingestion.dialog.field.model_path": "Model path (full path) *",
   "ingestion.dialog.field.tileset_filename": "Tileset filename *",
@@ -104,5 +102,21 @@
   "ingestion.dialog.field.horizontal_accuracy_ce90": "Horizontal accuracy CE90",
   "ingestion.dialog.field.relative_accuracy_le90": "Relative accuracy LE90",
   "ingestion.dialog.field.estimated_precision": "Estimated precision",
-  "ingestion.dialog.field.measured_precision": "Measured precision"
+  "ingestion.dialog.field.measured_precision": "Measured precision",
+
+  "ingestion.status.btn.text": "Status",
+
+  "ingestion.status.dialog.title": "3D model ingestion status",
+
+  "ingestion.status.field.id": "Id",
+  "ingestion.status.field.resourceId": "Resource Id",
+  "ingestion.status.field.version": "Version",
+  "ingestion.status.field.type": "Type",
+  "ingestion.status.field.description": "Description",
+  "ingestion.status.field.status": "Status",
+  "ingestion.status.field.reason": "Reason",
+  "ingestion.status.field.parameters": "Parameters",
+  "ingestion.status.field.creationTime": "Creation Time",
+  "ingestion.status.field.updateTime": "Update Time",
+  "ingestion.status.field.percentage": "Percentage"
 }
