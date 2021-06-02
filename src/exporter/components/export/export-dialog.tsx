@@ -107,10 +107,21 @@ const validate = (values: ModelInfo, intl: IntlShape): GeometryError => {
 const isValidText = (e: React.ChangeEvent<any>): boolean => {
   // eslint-disable-next-line
   const data: string = (e.nativeEvent as any).data;
-  if (!data)
+  if (!data) {
     return true;
-
+  }
   const charIdx = data.search(/[a-zA-Z0-9-_.)]+/i);
+  return (charIdx === FIRST_CHAR_IDX);
+};
+
+// eslint-disable-next-line
+const isValidDate = (e: React.ChangeEvent<any>): boolean => {
+  // eslint-disable-next-line
+  const data: string = (e.nativeEvent as any).data;
+  if (!data) {
+    return true;
+  }
+  const charIdx = data.search(/[TZ0-9-:.)]+/i);
   return (charIdx === FIRST_CHAR_IDX);
 };
 
@@ -217,11 +228,15 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
 
   // eslint-disable-next-line
   const checkText = (e: React.ChangeEvent<any>) => {
-    setFormErrors({ geometryFormat: '' });
-    if (serverErrors.duplicate) {
-      setServerErrors({ ...serverErrors, duplicate: '' });
+    if (formErrors.geometryFormat) {
+      setFormErrors({ ...formErrors, geometryFormat: '' });
     }
     return isValidText(e) ? formik.handleChange(e) : false;
+  };
+
+  // eslint-disable-next-line
+  const checkDate = (e: React.ChangeEvent<any>) => {
+    return isValidDate(e) ? formik.handleChange(e) : false;
   };
 
   useEffect(() => {
@@ -397,6 +412,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                     id="description"
                     name="description"
                     type="text"
+                    onChange={checkText}
                     value={formik.values.description}
                     className={classes.textField}
                   />
@@ -524,7 +540,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                     name="region"
                     type="text"
                     onChange={checkText}
-                    value={formik.values.sensorType}
+                    value={formik.values.region}
                     className={classes.textField}
                   />
                 </Box>
