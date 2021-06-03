@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { ICellRendererParams, Column, RowNode, GridApi, ColumnApi } from 'ag-grid-community';
-import { LinkRenderer } from './link.cell-renderer';
+import { StatusRenderer } from './status.cell-renderer';
 
 /* eslint-disable */
 const mockDataBase:ICellRendererParams = {
@@ -33,7 +33,7 @@ describe('AgGrid LinkRenderer component', () => {
     };
 
     const wrapper = shallow(
-      <LinkRenderer {...mockData} />
+      <StatusRenderer {...mockData} />
     );
 
     expect(wrapper).toMatchSnapshot();
@@ -48,7 +48,7 @@ describe('AgGrid LinkRenderer component', () => {
     };
 
     const wrapper = shallow(
-      <LinkRenderer {...mockData} />
+      <StatusRenderer {...mockData} />
     );
     
     const linkContainer = wrapper.find('a');
@@ -64,7 +64,7 @@ describe('AgGrid LinkRenderer component', () => {
     };
 
     const wrapper = shallow(
-      <LinkRenderer {...mockData} />
+      <StatusRenderer {...mockData} />
     );
     
     const linkContainer = wrapper.find('a');

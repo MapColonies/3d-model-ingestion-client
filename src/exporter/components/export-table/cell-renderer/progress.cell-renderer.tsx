@@ -13,7 +13,7 @@ export const ProgressRenderer: React.FC<ICellRendererParams> = (
   props
 ) => {
   const [isRtl] = useState<boolean>(EXPORTER_CONFIG.I18N.DEFAULT_LANGUAGE === 'he' ? true : false);
-  const value: number = (props.data as IExportTaskStatus).progress; 
+  const value: number = (props.data as IExportTaskStatus).percentage; 
   const status: string = (props.data as IExportTaskStatus).status;
   if (!value || status === ExportStatus.FAILED) {
     return <></>;//''; // not null!

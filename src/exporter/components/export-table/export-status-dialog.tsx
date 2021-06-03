@@ -10,12 +10,11 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Box } from '@map-colonies/react-components';
 import EXPORTER_CONFIG from '../../../common/config';
 import { useStore } from '../../models/rootStore';
-import { IExportTaskStatus, IBbox } from '../../models/exportTaskStatus';
+import { IExportTaskStatus } from '../../models/exportTaskStatus';
 import { ProgressRenderer } from './cell-renderer/progress.cell-renderer';
-import { LinkRenderer } from './cell-renderer/link.cell-renderer';
-import './export-status-dialog.css';
+import { StatusRenderer } from './cell-renderer/status.cell-renderer';
 
-const unsetSize = 0;
+import './export-status-dialog.css';
 
 interface ExportStatusDialogProps {
   isOpen: boolean;
@@ -43,16 +42,6 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
       return date
         ? moment(new Date(date.toLocaleString())).format('DD/MM/YYYY HH:mm')
         : '-';
-    };
-
-    const renderSize = (size: number): string => {
-      return size !== unsetSize ? `${size}` : '-';
-    };
-
-    const renderBbox = (bbox: IBbox | undefined): string => {
-      return bbox
-        ? `Top right: ${bbox.topRight.lat}, ${bbox.topRight.lon}, Bottom left: ${bbox.bottomLeft.lat}, ${bbox.bottomLeft.lon}`
-        : '';
     };
 
     const onGridReady = (params: GridReadyEvent): void => {
@@ -93,39 +82,44 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
         },
         {
           headerName: intl.formatMessage({ id: 'ingestion.status.field.status' }),
-          width: 150,
+          width: 130,
           field: 'status',
+          cellRenderer: 'statusRenderer',
           suppressMovable: true,
         },
         {
           headerName: intl.formatMessage({ id: 'ingestion.status.field.reason' }),
-          width: 200,
+          width: 280,
           field: 'reason',
           suppressMovable: true,
         },
         {
           headerName: intl.formatMessage({ id: 'ingestion.status.field.parameters' }),
-          width: 180,
+          width: 500,
           field: 'parameters',
+          cellRenderer: (props: ICellRendererParams): string => {
+            const data = props.data as IExportTaskStatus;
+            return JSON.stringify(data.parameters);
+          },
           suppressMovable: true,
         },
         {
           headerName: intl.formatMessage({ id: 'ingestion.status.field.creationTime' }),
-          width: 150,
+          width: 170,
           field: 'creationTime',
           cellRenderer: (props: ICellRendererParams): string => {
             const data = props.data as IExportTaskStatus;
-            return renderDate(data.creationDate);
+            return renderDate(data.creationTime);
           },
           suppressMovable: true,
         },
         {
           headerName: intl.formatMessage({ id: 'ingestion.status.field.updateTime' }),
-          width: 150,
+          width: 170,
           field: 'updateTime',
           cellRenderer: (props: ICellRendererParams): string => {
             const data = props.data as IExportTaskStatus;
-            return renderDate(data.lastUpdateTime);
+            return renderDate(data.updateTime);
           },
           suppressMovable: true,
         },
@@ -150,13 +144,12 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
           gridApi.forEachNodeAfterFilterAndSort((rowNode) => {
             const data = rowNode.data as IExportTaskStatus;
             const item = exportedPackages.find(
-              (elem) => elem.taskId === data.taskId
+              (elem) => elem.id === data.id
             );
             if (item) {
               if (
                 item.status !== data.status ||
-                item.lastUpdateTime !== data.lastUpdateTime ||
-                item.progress !== data.progress
+                item.updateTime !== data.updateTime
               ) {
                 Object.keys(data).forEach((key: string) => { 
                   // eslint-disable-next-line
@@ -174,7 +167,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
             let isFound = false;
             gridApi.forEachNode((rowNode) => {
               const data = rowNode.data as IExportTaskStatus;
-              isFound = isFound || elem.taskId === data.taskId;
+              isFound = isFound || elem.id === data.id;
             });
             // eslint-disable-next-line
             if (!isFound) {
@@ -195,17 +188,17 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
     }, [exporterStore.exportedPackages, pollingCycle, gridApi]);
 
     useEffect(() => {
-      // let pollingInterval: NodeJS.Timeout;
+      let pollingInterval: NodeJS.Timeout;
       if (isOpen) {
         void exporterStore.getJobs();
-        /*pollingInterval = setInterval(() => {
+        pollingInterval = setInterval(() => {
           setPollingCycle(pollingCycle + 1);
           void exporterStore.getJobs();
-        }, EXPORTER_CONFIG.EXPORT.POLLING_CYCLE_INTERVAL);*/
+        }, EXPORTER_CONFIG.EXPORT.POLLING_CYCLE_INTERVAL);
       }
 
       return (): void => {
-        // clearInterval(pollingInterval);
+        clearInterval(pollingInterval);
       };
     }, [isOpen, exporterStore, pollingCycle]);
 
@@ -235,7 +228,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
                 })}
                 frameworkComponents={{
                   progressRenderer: ProgressRenderer,
-                  linkRenderer: LinkRenderer,
+                  statusRenderer: StatusRenderer,
                 }}
               />
             </Box>

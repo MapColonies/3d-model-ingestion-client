@@ -16,7 +16,7 @@ const mockDataBase:ICellRendererParams = {
   data: {progress: 0} as any,
   node: new RowNode(),
   colDef: {},
-  column: new Column({},null,'progress',false),
+  column: new Column({},null,'percentage',false),
   $scope: null,
   rowIndex: 1,
   api: new GridApi(),

@@ -1,0 +1,12 @@
+.statusPending {
+  color: black;
+}
+.statusIn-Progress {
+  color: orange;
+}
+.statusCompleted {
+  color: green;
+}
+.statusFailed {
+  color: red;
+}
