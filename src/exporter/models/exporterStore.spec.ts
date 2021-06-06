@@ -1,23 +1,23 @@
-import MOCK_EXPORTED_PACKAGES from '../../__mocks-data__/exportedPackages';
+import MOCK_EXPORTED_MODELS from '../../__mocks-data__/exportedModels';
 import { ResponseState } from '../../common/models/ResponseState';
 // eslint-disable-next-line
 import '../../__mocks__/confEnvShim';
 import { rootStore } from './rootStore';
 import { ExportTaskStatusResponse } from './exporterStore';
 
-const exportedPackages: ExportTaskStatusResponse = MOCK_EXPORTED_PACKAGES;
+const exportedModels: ExportTaskStatusResponse = MOCK_EXPORTED_MODELS;
 
 describe('Exporter Store', () => {
   it('return an array of exported packages in a result of FETCH', async () => {
     const packagesFetcher = async (): Promise<ExportTaskStatusResponse> =>
-      Promise.resolve<ExportTaskStatusResponse>(exportedPackages);
+      Promise.resolve<ExportTaskStatusResponse>(exportedModels);
     const { exporterStore } = rootStore.create({}, { fetch: packagesFetcher });
 
     await exporterStore.getJobs();
 
-    const result: ExportTaskStatusResponse = exporterStore.exportedPackages as ExportTaskStatusResponse;
+    const result: ExportTaskStatusResponse = exporterStore.exportedModels as ExportTaskStatusResponse;
 
-    expect(result).toEqual(exportedPackages);
+    expect(result).toEqual(exportedModels);
   });
 
   it('status is DONE when export package trigered succesfully', async () => {

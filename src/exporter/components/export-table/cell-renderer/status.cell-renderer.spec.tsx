@@ -10,10 +10,10 @@ const mockDataBase:ICellRendererParams = {
   getValue: () => {},
   setValue: () => {},
   formatValue: () => {},
-  data: {link: ''} as any,
+  data: {status: ''} as any,
   node: new RowNode(),
   colDef: {},
-  column: new Column({},null,'link',false),
+  column: new Column({},null,'status',false),
   $scope: null,
   rowIndex: 1,
   api: new GridApi(),
@@ -26,7 +26,7 @@ const mockDataBase:ICellRendererParams = {
 };
 /* eslint-enable */
 
-describe('AgGrid LinkRenderer component', () => {
+describe('AgGrid StatusRenderer component', () => {
   it('renders correctly', () => {
     const mockData = {
       ...mockDataBase
@@ -37,38 +37,6 @@ describe('AgGrid LinkRenderer component', () => {
     );
 
     expect(wrapper).toMatchSnapshot();
-  });
-
-  it('value of link rendered as href', () => {
-    const value = 'http://kuku.com/1';
-    const mockData = {
-      ...mockDataBase,
-      value,
-      data: { link: value },
-    };
-
-    const wrapper = shallow(
-      <StatusRenderer {...mockData} />
-    );
-    
-    const linkContainer = wrapper.find('a');
-    expect(linkContainer.props().href).toBe(value);
-  });
-
-  it('empty link value not renders an <a>', () => {
-    const value = '';
-    const mockData = {
-      ...mockDataBase,
-      value,
-      data: { link: value },
-    };
-
-    const wrapper = shallow(
-      <StatusRenderer {...mockData} />
-    );
-    
-    const linkContainer = wrapper.find('a');
-    expect(linkContainer).toEqual({});
   });
 
 });

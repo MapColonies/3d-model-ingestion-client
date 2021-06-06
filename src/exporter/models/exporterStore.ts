@@ -65,7 +65,8 @@ export const exporterStore = types
       Object.values(ResponseState)
     ),
     searchParams: types.optional(searchParams, {}),
-    exportedPackages: types.maybe(types.frozen<any>([])),
+    // eslint-disable-next-line
+    exportedModels: types.maybe(types.frozen<any>([])),
     errors: types.frozen<IInternalError[]>([]),
   })
   .views((self) => ({
@@ -100,12 +101,8 @@ export const exporterStore = types
         const error = e as AxiosError;
         // eslint-disable-next-line
         if (error) {
-          if (
-            error.response &&
-            error.response.data &&
-            // eslint-disable-next-line
-            error.response.data.name
-          ) {
+          // eslint-disable-next-line
+          if ( error.response?.data?.name ) {
             addError({
               request: error.config,
               // eslint-disable-next-line
@@ -135,8 +132,8 @@ export const exporterStore = types
             'GET',
             {}
           );
-          // const result = yield Promise.resolve(MOCK_EXPORTED_PACKAGES);
-          self.exportedPackages = result;
+          // const result = yield Promise.resolve(MOCK_EXPORTED_MODELS);
+          self.exportedModels = result;
         } catch (e) {
           const error = e as AxiosError;
           self.state = ResponseState.ERROR;

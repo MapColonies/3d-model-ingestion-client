@@ -134,7 +134,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
     }, [intl]);
 
     useEffect(() => {
-      const updateRowData = (exportedPackages: IExportTaskStatus[]): void => {
+      const updateRowData = (exportedModels: IExportTaskStatus[]): void => {
         if (gridApi) {
           const itemsToUpdate = new Array<IExportTaskStatus>();
           const itemsToAdd = new Array<IExportTaskStatus>();
@@ -143,7 +143,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
           // UPDATE or REMOVE 
           gridApi.forEachNodeAfterFilterAndSort((rowNode) => {
             const data = rowNode.data as IExportTaskStatus;
-            const item = exportedPackages.find(
+            const item = exportedModels.find(
               (elem) => elem.id === data.id
             );
             if (item) {
@@ -163,7 +163,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
           });
 
           // ADD not exisitng
-          exportedPackages.forEach((elem) => {
+          exportedModels.forEach((elem) => {
             let isFound = false;
             gridApi.forEachNode((rowNode) => {
               const data = rowNode.data as IExportTaskStatus;
@@ -183,9 +183,9 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
         }
       };
 
-      if (!pollingCycle) setRowData(exporterStore.exportedPackages);
-      else updateRowData(exporterStore.exportedPackages);
-    }, [exporterStore.exportedPackages, pollingCycle, gridApi]);
+      if (!pollingCycle) setRowData(exporterStore.exportedModels);
+      else updateRowData(exporterStore.exportedModels);
+    }, [exporterStore.exportedModels, pollingCycle, gridApi]);
 
     useEffect(() => {
       let pollingInterval: NodeJS.Timeout;

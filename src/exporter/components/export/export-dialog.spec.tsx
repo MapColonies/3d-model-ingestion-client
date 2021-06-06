@@ -1,15 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Polygon } from 'geojson';
 import { act, waitFor } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 // eslint-disable-next-line
 import '../../../__mocks__/confEnvShim';
 import MESSAGES from '../../../common/i18n';
-import MOCK_EXPORTED_PACKAGES from '../../../__mocks-data__/exportedPackages';
-import { ExportStoreError } from '../../../common/models/exportStoreError';
-import EXPORTER_CONFIG from '../../../common/config';
-import { getField, updateField, updateFieldAsync } from '../../../common/test-helpers/text-field.helper.spec';
+import MOCK_EXPORTED_MODELS from '../../../__mocks-data__/exportedModels';
+import { updateField } from '../../../common/test-helpers/text-field.helper.spec';
 import { getButtonById } from '../../../common/test-helpers/button.helper.spec';
 import { ExportTaskStatusResponse } from '../../models/exporterStore';
 import { rootStore, StoreProvider } from '../../models/rootStore';
@@ -19,20 +16,8 @@ const setOpenFn = jest.fn();
 const handleExport = jest.fn();
 console.warn = jest.fn();
 
-const exportedPackages: ExportTaskStatusResponse = MOCK_EXPORTED_PACKAGES;
-const packagesFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedPackages);
-
-const polygon: Polygon = {
-  type: 'Polygon',
-  coordinates: [[[32, 35], [], [31, 34], []]],
-}
-
-const fields = {
-  bottomLeftLat: polygon.coordinates[0][0][1].toFixed(EXPORTER_CONFIG.EXPORT.MAX_FRACTION_DIGITS),
-  bottomLeftLon: polygon.coordinates[0][0][0].toFixed(EXPORTER_CONFIG.EXPORT.MAX_FRACTION_DIGITS),
-  topRightLat: polygon.coordinates[0][2][1].toFixed(EXPORTER_CONFIG.EXPORT.MAX_FRACTION_DIGITS),
-  topRightLon: polygon.coordinates[0][2][0].toFixed(EXPORTER_CONFIG.EXPORT.MAX_FRACTION_DIGITS)
-}
+const exportedModels: ExportTaskStatusResponse = MOCK_EXPORTED_MODELS;
+const packagesFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedModels);
 
 // Enzyme doesn’t work properly with hooks in general, especially for `shallow` so this is the way to mock `react-intl` module.
 // Enspired by https://github.com/formatjs/formatjs/issues/1477

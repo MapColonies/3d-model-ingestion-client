@@ -5,7 +5,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { waitFor } from '@testing-library/react';
 // eslint-disable-next-line
 import '../../../__mocks__/confEnvShim';
-import MOCK_EXPORTED_PACKAGES from '../../../__mocks-data__/exportedPackages';
+import MOCK_EXPORTED_MODELS from '../../../__mocks-data__/exportedModels';
 import MESSAGES from '../../../common/i18n';
 import { rootStore, StoreProvider } from '../../models/rootStore';
 import { ExportTaskStatusResponse } from '../../models/exporterStore';
@@ -13,8 +13,8 @@ import { ExportStatusDialog } from './export-status-dialog';
 
 const setOpenFn = jest.fn();
 
-const exportedPackages: ExportTaskStatusResponse = MOCK_EXPORTED_PACKAGES;
-const packagesFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedPackages);
+const exportedModels: ExportTaskStatusResponse = MOCK_EXPORTED_MODELS;
+const packagesFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedModels);
 
 describe('ExportStatusTable component', () => {
   it('renders correctly', async () => {
@@ -33,7 +33,7 @@ describe('ExportStatusTable component', () => {
     wrapper.update();
 
     await waitFor(() => {
-      return mockStore.exporterStore.exportedPackages !== [];
+      return mockStore.exporterStore.exportedModels !== [];
     });
 
     await waitFor(() => {
@@ -59,7 +59,7 @@ describe('ExportStatusTable component', () => {
     wrapper.update(); 
 
     await waitFor(() => {
-      return mockStore.exporterStore.exportedPackages !== [];
+      return mockStore.exporterStore.exportedModels !== [];
     });
   
     await waitFor(() => {
@@ -84,14 +84,14 @@ describe('ExportStatusTable component', () => {
     );
 
     await waitFor(() => {
-      return mockStore.exporterStore.exportedPackages !== [];
+      return mockStore.exporterStore.exportedModels !== [];
     });
 
     wrapper.update();
 
     await waitFor(() => {
       const aggrid = wrapper.find(AgGridReact);
-      expect(aggrid.props().rowData).toBe(exportedPackages);
+      expect(aggrid.props().rowData).toBe(exportedModels);
     });
   });
 });

@@ -42,12 +42,12 @@ describe('AgGrid ProgressRenderer component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('value of progress 80 shown as 80', () => {
+  it('value of progress 80 shown as 80%', () => {
     const value = 80;
     const mockData = {
       ...mockDataBase,
       value,
-      data: { progress: value }
+      data: { percentage: value }
     };
 
     const wrapper = shallow(
@@ -55,15 +55,15 @@ describe('AgGrid ProgressRenderer component', () => {
     );
     
     const percContainer = wrapper.find(Typography);
-    expect(percContainer.text()).toBe('80');
+    expect(percContainer.text()).toBe('80%');
   });
 
-  it('value of progress 0.8 shown as 0.8', () => {
+  it('value of progress 0.8 shown as 0.8%', () => {
     const value = 0.8;
     const mockData = {
       ...mockDataBase,
       value,
-      data: { progress: value }
+      data: { percentage: value }
     };
 
     const wrapper = shallow(
@@ -71,6 +71,6 @@ describe('AgGrid ProgressRenderer component', () => {
     );
     
     const percContainer = wrapper.find(Typography);
-    expect(percContainer.text()).toBe('0.8');
+    expect(percContainer.text()).toBe('0.8%');
   });
 });
