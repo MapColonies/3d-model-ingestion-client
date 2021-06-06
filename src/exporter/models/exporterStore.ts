@@ -23,9 +23,9 @@ export interface ModelInfo {
   mdSource: string;
   xml: string;
   anytext: string;
-  insertDate: Date;
-  creationDate?: Date;
-  validationDate?: Date;
+  insertDate: string;
+  creationDate?: string;
+  validationDate?: string;
   wktGeometry?: string;
   title?: string;
   producerName: string;
@@ -37,8 +37,8 @@ export interface ModelInfo {
   version: string;
   centroid: string;
   footprint: string;
-  timeBegin: Date;
-  timeEnd: Date;
+  timeBegin: string;
+  timeEnd: string;
   sensorType: string;
   region: string;
   nominalResolution: string;

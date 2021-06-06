@@ -140,7 +140,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   const { isOpen, onSetOpen, handleExport } = props;
   const classes = useStyle();
   const intl = useIntl();
-  const currentDate = new Date();
+  const currentDate = new Date().toISOString();
   const formik = useFormik({
     initialValues: {
       modelPath: '',
@@ -340,7 +340,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   name="insertDate"
                   type="hidden"
                   onChange={checkText}
-                  value={formik.values.insertDate.toISOString()}
+                  value={formik.values.insertDate}
                 />
                 <Box className={classes.textFieldBox}>
                   <TextField
@@ -349,7 +349,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                     name="creationDate"
                     type="text"
                     onChange={checkDate}
-                    value={formik.values.creationDate.toISOString()}
+                    value={formik.values.creationDate}
                     className={classes.textField}
                   />
                 </Box>
@@ -360,7 +360,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                     name="validationDate"
                     type="text"
                     onChange={checkDate}
-                    value={formik.values.validationDate.toISOString()}
+                    value={formik.values.validationDate}
                     className={classes.textField}
                   />
                 </Box>
@@ -505,7 +505,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                     name="timeBegin"
                     type="text"
                     onChange={checkDate}
-                    value={formik.values.timeBegin.toISOString()}
+                    value={formik.values.timeBegin}
                     className={classes.textField}
                   />
                 </Box>
@@ -518,7 +518,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                     name="timeEnd"
                     type="text"
                     onChange={checkDate}
-                    value={formik.values.timeEnd.toISOString()}
+                    value={formik.values.timeEnd}
                     className={classes.textField}
                   />
                 </Box>
