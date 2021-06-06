@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, Snackbar, SnackbarAction } from '@map-colonies/react-core';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { Box } from '@map-colonies/react-components';
 import { useStore } from '../models/rootStore';
 import { ExportDialog } from '../components/export/export-dialog';
 import { ResponseState } from '../../common/models/ResponseState';
@@ -61,29 +62,27 @@ const ExporterView: React.FC = observer(() => {
 
   return (
     <>
-      <Button
-        raised
-        onClick={onModelIngestionClick}>
-        <FormattedMessage id="ingestion.btn.text" />
-      </Button>
-      {
-        openModelIngestion && <ExportDialog
-          isOpen={openModelIngestion}
-          onSetOpen={setOpenModelIngestion}
-          handleExport={exporterStore.startExportGeoPackage}>
-        </ExportDialog>
-      }
-      <Button
-        raised
-        onClick={onStatusClick}>
-        <FormattedMessage id="ingestion.status.btn.text" />
-      </Button>
-      {
-        openStatus && <ExportStatusDialog
-          isOpen={openStatus}
-          onSetOpen={setOpenStatus}>
-        </ExportStatusDialog>
-      }
+      <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button raised onClick={onModelIngestionClick} style={{ margin: '15px 20px 0 0' }}>
+          <FormattedMessage id="ingestion.btn.text" />
+        </Button>
+        {
+          openModelIngestion && <ExportDialog
+            isOpen={openModelIngestion}
+            onSetOpen={setOpenModelIngestion}
+            handleExport={exporterStore.startExportGeoPackage}>
+          </ExportDialog>
+        }
+        <Button raised onClick={onStatusClick} style={{ margin: '15px 20px 0 0' }}>
+          <FormattedMessage id="ingestion.status.btn.text" />
+        </Button>
+        {
+          openStatus && <ExportStatusDialog
+            isOpen={openStatus}
+            onSetOpen={setOpenStatus}>
+          </ExportStatusDialog>
+        }
+      </Box>
       {
         !!snackOpen && <Snackbar
           open={snackOpen}

@@ -46,7 +46,8 @@ const useStyle = makeStyles((theme: Theme) =>
       width: '110px'
     },
     modelPathAndTileset: {
-      display: 'flex'
+      display: 'flex',
+      marginTop: '30px'
     },
     metadata: {
       justifyContent: 'space-around',
@@ -66,7 +67,6 @@ const useStyle = makeStyles((theme: Theme) =>
     },
     textFieldBoxEnd: {
       display: 'flex',
-      marginBottom: '16px',
       flexGrow: 1,
       justifyContent: 'flex-end'
     },
@@ -255,7 +255,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
         <DialogContent className={classes.noScrollbar}>
           <form onSubmit={formik.handleSubmit}>
             <Box className={classes.modelPathAndTileset}>
-              <Box className={classes.textFieldBox}>
+              <Box>
                 <TextField
                   label={intl.formatMessage({ id: 'ingestion.dialog.field.model_path' })}
                   id="modelPath"
