@@ -7,6 +7,10 @@ const VERSION = (window as any)._env_.VERSION;
 const REQUEST = (window as any)._env_.REQUEST;
 const SERVICE_PROTOCOL = (window as any)._env_.SERVICE_PROTOCOL;
 const SERVICE_NAME = (window as any)._env_.SERVICE_NAME;
+const MODELS_BASE_URL = (window as any)._env_.MODELS_BASE_URL;
+const MODELS_URL = (window as any)._env_.MODELS_URL;
+const JOBS_BASE_URL = (window as any)._env_.JOBS_BASE_URL;
+const JOBS_URL = (window as any)._env_.JOBS_URL;
 const ACTIVE_LAYER = (window as any)._env_.ACTIVE_LAYER;
 const ACTIVE_LAYER_PROPERTIES = (window as any)._env_.ACTIVE_LAYER_PROPERTIES;
 const EXPORT = (window as any)._env_.EXPORT;
@@ -16,6 +20,10 @@ const BBOX = (window as any)._env_.BBOX;
 const EXPORTER_CONFIG = {
   SERVICE_PROTOCOL: SERVICE_PROTOCOL,
   SERVICE_NAME: SERVICE_NAME,
+  MODELS_BASE_URL: MODELS_BASE_URL,
+  MODELS_URL: MODELS_URL,
+  JOBS_BASE_URL: JOBS_BASE_URL,
+  JOBS_URL: JOBS_URL,
   I18N: {
     DEFAULT_LANGUAGE: LANGUAGE,
   },

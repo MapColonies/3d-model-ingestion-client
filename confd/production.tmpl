@@ -8,6 +8,10 @@ window._env_ = {
   REQUEST: '{{ getv "/configuration/mapserver/request" "ImageryMaps" }}',
   SERVICE_PROTOCOL: '{{ getv "/configuration/service/protocol" "http://" }}',
   SERVICE_NAME: '{{ getv "/configuration/service/url" "localhost:8000" }}',
+  MODELS_BASE_URL: '{{ getv "/configuration/models/baseurl" "http://localhost:8082" }}',
+  MODELS_URL: '{{ getv "/configuration/models/url" "/models" }}',
+  JOBS_BASE_URL: '{{ getv "/configuration/jobs/baseurl" "http://localhost:8081" }}',
+  JOBS_URL: '{{ getv "/configuration/jobs/url" "/jobs" }}',
   ACTIVE_LAYER: '{{ getv "/configuration/active/layer" "OSM_DEFAULT" }}',
   ACTIVE_LAYER_PROPERTIES: {
     urlPattern : MAP_SERVER + '{{ getv "/configuration/active/layer/properties/mapurlpath" "/service" }}',

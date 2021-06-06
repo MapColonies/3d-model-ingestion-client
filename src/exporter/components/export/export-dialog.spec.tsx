@@ -96,35 +96,11 @@ describe('ExportDialog component', () => {
       expect(okButton.prop('disabled')).toBe(true);
     });
   });
-
-  it('Passed polygon presented as bottom-left and top-right corners coordinates', async () => {
-    const mockStore = rootStore.create({}, { fetch: packagesFetcher });
-
-    const wrapper = mount(
-      <StoreProvider value={mockStore}>
-        <IntlProvider locale={'en'} messages={MESSAGES['en']}>
-          <ExportDialog
-            isOpen={true}
-            onSetOpen={setOpenFn}
-            handleExport={handleExport}
-          />
-        </IntlProvider>
-      </StoreProvider>
-    );
-
-    for (const field in fields) {
-      await waitFor(() => {
-        const fieldVal = getField(wrapper, field);
-        // eslint-disable-next-line
-        expect(fieldVal.prop('value')).toBe((fields as any)[field]);
-      });
-    }
-
-  });
   
   it('When package name and directory name are defined Ok button is enabled and download link properly generated', async () => {
     const exportModelPath = 'test';
     const exportTilesetFilename = 'test';
+    const exportIdentifier = 'test';
     const mockStore = rootStore.create({}, { fetch: packagesFetcher });
 
     const wrapper = mount(
@@ -142,6 +118,7 @@ describe('ExportDialog component', () => {
     await waitFor(() => {
       updateField(wrapper, 'modelPath', exportModelPath);
       updateField(wrapper, 'tilesetFilename', exportTilesetFilename);
+      updateField(wrapper, 'identifier', exportIdentifier);
     })
 
     wrapper.update();
@@ -155,6 +132,7 @@ describe('ExportDialog component', () => {
   it('When all data filled and FORM submitted, handleExport triggered', async () => {
     const exportModelPath = 'test';
     const exportTilesetFilename = 'test';
+    const exportIdentifier = 'test';
     const mockStore = rootStore.create({}, { fetch: packagesFetcher });
 
     const wrapper = mount(
@@ -172,6 +150,7 @@ describe('ExportDialog component', () => {
     await waitFor(() => {
       updateField(wrapper, 'modelPath', exportModelPath);
       updateField(wrapper, 'tilesetFilename', exportTilesetFilename);
+      updateField(wrapper, 'identifier', exportIdentifier);
     })
 
     // eslint-disable-next-line
@@ -186,51 +165,6 @@ describe('ExportDialog component', () => {
     await waitFor(() => {
       expect(getButtonById(wrapper, 'general.ok-btn.text').prop('disabled')).toBe(false);
       expect(handleExport).toHaveBeenCalled();
-    });
-  });
-
-  it('When all data filled and FORM submitted, export fails', async () => {
-    const exportModelPath = 'uniqueName';
-    const exportTilesetFilename = 'uniqueName';
-    const modelIdentifier = 'a4277d1c-a656-48d9-ad60-5df0de1ed77f';
-
-    const packagesFetcherFailure = async (): Promise<ExportTaskStatusResponse> => Promise.reject<ExportTaskStatusResponse>();
-    const mockStore = rootStore.create({}, { fetch: packagesFetcherFailure });
-
-    const handleExportError = jest.fn(x => {
-      mockStore.exporterStore.addError({ request: {}, key: ExportStoreError.BBOX_TOO_SMALL_FOR_RESOLUTION });
-    });
-
-    const wrapper = mount(
-      <StoreProvider value={mockStore}>
-        <IntlProvider locale={'en'} messages={MESSAGES['en']}>
-          <ExportDialog
-            isOpen={true}
-            onSetOpen={setOpenFn}
-            handleExport={handleExportError}
-          />
-        </IntlProvider>
-      </StoreProvider>
-    );
-
-    await updateFieldAsync(wrapper, 'modelPath', exportModelPath);
-    await updateFieldAsync(wrapper, 'tilesetFilename', exportTilesetFilename);
-    await updateFieldAsync(wrapper, 'identifier', modelIdentifier);
-
-    // eslint-disable-next-line
-    await act(async () => {
-      wrapper
-        .find('form')
-        .simulate('submit');
-    });
-
-    wrapper.update();
-
-    await waitFor(() => {
-      const errorMessage: string = MESSAGES['en']['export.dialog.bbox.resolution.validation.error.text'] as string;
-      // eslint-disable-next-line
-      expect(wrapper.text().includes(errorMessage)).toBe(true);
-      expect(handleExportError).toHaveBeenCalled();
     });
   });
 

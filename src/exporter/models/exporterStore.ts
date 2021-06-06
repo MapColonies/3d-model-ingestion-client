@@ -4,6 +4,7 @@ import { AxiosRequestConfig, AxiosError } from 'axios';
 import { ApiHttpResponse } from '../../common/models/api-response';
 import { ResponseState } from '../../common/models/ResponseState';
 import { ExportStoreError } from '../../common/models/exportStoreError';
+import EXPORTER_CONFIG from '../../common/config';
 import { searchParams } from './search-params';
 import { IRootStore } from './rootStore';
 import { IExportTaskStatus } from './exportTaskStatus';
@@ -88,8 +89,8 @@ export const exporterStore = types
 
       try {
         /*const result = */yield self.root.fetch(
-          'http://localhost:8082',
-          '/models',
+          EXPORTER_CONFIG.MODELS_BASE_URL,
+          EXPORTER_CONFIG.MODELS_URL,
           'POST',
           params
         );
@@ -128,7 +129,12 @@ export const exporterStore = types
       > {
         try {
           self.state = ResponseState.IDLE;
-          const result = yield self.root.fetch('http://localhost:8081', '/jobs', 'GET', {});
+          const result = yield self.root.fetch(
+            EXPORTER_CONFIG.JOBS_BASE_URL,
+            EXPORTER_CONFIG.JOBS_URL,
+            'GET',
+            {}
+          );
           // const result = yield Promise.resolve(MOCK_EXPORTED_PACKAGES);
           self.exportedPackages = result;
         } catch (e) {

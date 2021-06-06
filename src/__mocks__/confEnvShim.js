@@ -9,6 +9,10 @@ if (!window._env_) {
       REQUEST: 'REQUEST',
       SERVICE_PROTOCOL: 'SERVICE_PROTOCOL',
       SERVICE_NAME: 'SERVICE_NAME',
+      MODELS_BASE_URL: 'MODELS_BASE_URL',
+      MODELS_URL: 'MODELS_URL',
+      JOBS_BASE_URL: 'JOBS_BASE_URL',
+      JOBS_URL: 'JOBS_URL',
       ACTIVE_LAYER: 'ACTIVE_LAYER',
       BBOX: {
         limit: 20000,

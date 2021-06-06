@@ -9,15 +9,7 @@ exports[`MapContainer component renders correctly 1`] = `
   >
     <div
       className="filtersContainer"
-    >
-      <PolygonSelectionUi
-        isSelectionEnabled={false}
-        onCancelDraw={[Function]}
-        onPolygonUpdate={[Function]}
-        onReset={[Function]}
-        onStartDraw={[Function]}
-      />
-    </div>
+    />
   </div>
   <MapWrapper
     onPolygonSelection={[Function]}

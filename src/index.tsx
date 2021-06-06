@@ -18,10 +18,10 @@ const store = rootStore.create(
     fetch: async (baseURL: string, url: string, method: Method, params: Record<string, unknown>) => {
       const errorMsg = 'CLIENT HTTP ERROR BY AXIOS';
       return Axios.request({
+        baseURL,
         url, 
         method, 
-        data: params,
-        baseURL 
+        data: params
       })
       .then((res) => res.data as ExporterResponse)
       .catch ((error) => {
