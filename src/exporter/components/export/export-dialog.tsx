@@ -23,13 +23,18 @@ const useStyle = makeStyles((theme: Theme) =>
     title: {
       borderBottom: '1px solid lightgray'
     },
+    placeholder: {
+      height: '16px'
+    },
     formError: {
       display: 'block',
       position: 'relative',
       color: theme.palette.error.main,
-      fontSize: '14px',
-      top: '-32px',
-      left: '22px'
+      fontSize: '12px',
+      top: '-16px',
+      left: '22px',
+      width: '200px',
+      height: '16px'
     },
     errorContainer: {
       display: 'flex',
@@ -49,11 +54,17 @@ const useStyle = makeStyles((theme: Theme) =>
       display: 'flex',
       marginTop: '30px'
     },
+    form: {
+      height: '100%',
+      overflow: 'hidden'
+    },
     metadata: {
+      maxHeight: '770px',
       justifyContent: 'space-around',
       borderRadius: '10px',
       border: '1px solid lightgray',
-      padding: '20px'
+      padding: '20px',
+      overflowY: 'auto'
     },
     metadataLabel: {
       display: 'block',
@@ -61,8 +72,17 @@ const useStyle = makeStyles((theme: Theme) =>
       left: '23px',
       top: '13px'
     },
-    textFieldBox: {
+    textFieldRow: {
       display: 'flex',
+      marginBottom: '16px'
+    },
+    textFieldRowWithValidation: {
+      display: 'flex'
+    },
+    textFieldLastRow: {
+      display: 'flex'
+    },
+    textFieldBox: {
       marginBottom: '16px'
     },
     textFieldBoxEnd: {
@@ -253,7 +273,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
           <FormattedMessage id="ingestion.dialog.title" />
         </DialogTitle>
         <DialogContent className={classes.noScrollbar}>
-          <form onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit} className={classes.form}>
             <Box className={classes.modelPathAndTileset}>
               <Box>
                 <TextField
@@ -282,7 +302,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
               <NotchLabel text={intl.formatMessage({ id: 'ingestion.dialog.metadata' })} />
             </Box>
             <Box className={classes.metadata}>
-              <Box className={classes.textFieldBox}>
+              <Box className={classes.textFieldRow}>
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.identifier' })}
@@ -365,7 +385,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   />
                 </Box>
               </Box>
-              <Box className={classes.textFieldBox}>
+              <Box className={classes.textFieldRowWithValidation}>
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.wkt_geometry' })}
@@ -403,9 +423,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
               {
                 (formErrors.geometryFormat) ?
                 <div className={classes.formError}>{formErrors.geometryFormat}</div> : 
-                null
+                <div className={classes.placeholder}></div>
               }
-              <Box className={classes.textFieldBox}>
+              <Box className={classes.textFieldRow}>
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.description' })}
@@ -440,7 +460,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   />
                 </Box>
               </Box>
-              <Box className={classes.textFieldBox}>
+              <Box className={classes.textFieldRow}>
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.srs' })}
@@ -475,7 +495,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   />
                 </Box>
               </Box>
-              <Box className={classes.textFieldBox}>
+              <Box className={classes.textFieldRow}>
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.centroid' })}
@@ -510,7 +530,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   />
                 </Box>
               </Box>
-              <Box className={classes.textFieldBox}>
+              <Box className={classes.textFieldRow}>
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.time_end' })}
@@ -545,7 +565,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   />
                 </Box>
               </Box>
-              <Box className={classes.textFieldBox}>
+              <Box className={classes.textFieldRow}>
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.nominal_resolution' })}
@@ -580,7 +600,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   />
                 </Box>
               </Box>
-              <Box className={classes.textFieldBox}>
+              <Box className={classes.textFieldLastRow}>
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.relative_accuracy_le90' })}
