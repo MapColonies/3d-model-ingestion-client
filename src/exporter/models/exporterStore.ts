@@ -25,7 +25,9 @@ export interface ModelInfo {
   xml: string;
   anytext: string;
   insertDate: string;
+  creationDateStr?: string;
   creationDate?: string;
+  validationDateStr?: string;
   validationDate?: string;
   wktGeometry?: string;
   title?: string;
@@ -38,7 +40,9 @@ export interface ModelInfo {
   version: string;
   centroid: string;
   footprint: string;
+  timeBeginStr: string;
   timeBegin: string;
+  timeEndStr: string;
   timeEnd: string;
   sensorType: string;
   region: string;

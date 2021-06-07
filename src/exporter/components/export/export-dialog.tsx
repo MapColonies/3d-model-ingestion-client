@@ -91,10 +91,11 @@ const useStyle = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end'
     },
     textField: {
-      minWidth: '230px',
-      marginTop: '5px',
-      marginRight: '5px',
-      marginLeft: '5px'
+      minWidth: '250px',
+      margin: '5px 5px 0 5px'
+    },
+    dateField: {
+      margin: '5px 5px 0 5px'
     },
     long: {
       minWidth: '200%'
@@ -169,7 +170,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
       xml: 'xml',
       anytext: 'anytext',
       insertDate: currentDate,
+      creationDateStr: currentDate,
       creationDate: currentDate,
+      validationDateStr: currentDate,
       validationDate: currentDate,
       wktGeometry: 'POINT(0 0)',
       title: '',
@@ -182,7 +185,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
       version: '',
       centroid: '',
       footprint: '',
+      timeBeginStr: currentDate,
       timeBegin: currentDate,
+      timeEndStr: currentDate,
       timeEnd: currentDate,
       sensorType: '',
       region: '',
@@ -206,7 +211,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
           xml: formik.values.xml,
           anytext: formik.values.anytext,
           insertDate: formik.values.insertDate,
+          creationDateStr: formik.values.creationDateStr,
           creationDate: formik.values.creationDate,
+          validationDateStr: formik.values.validationDateStr,
           validationDate: formik.values.validationDate,
           wktGeometry: formik.values.wktGeometry,
           title: formik.values.title,
@@ -219,7 +226,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
           version: formik.values.version,
           centroid: formik.values.centroid,
           footprint: formik.values.footprint,
+          timeBeginStr: formik.values.timeBeginStr,
           timeBegin: formik.values.timeBegin,
+          timeEndStr: formik.values.timeEndStr,
           timeEnd: formik.values.timeEnd,
           sensorType: formik.values.sensorType,
           region: formik.values.region,
@@ -255,6 +264,22 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   const checkDate = (e: React.ChangeEvent<any>) => {
     return isValidDate(e) ? formik.handleChange(e) : false;
   };
+  
+  const setCreationDate = (): void => {
+    formik.values.creationDate = new Date(formik.values.creationDateStr).toISOString();
+  }
+
+  const setValidationDate = (): void => {
+    formik.values.validationDate = new Date(formik.values.validationDateStr).toISOString();
+  }
+
+  const setTimeBegin = (): void => {
+    formik.values.timeBegin = new Date(formik.values.timeBeginStr).toISOString();
+  }
+
+  const setTimeEnd = (): void => {
+    formik.values.timeEnd = new Date(formik.values.timeEndStr).toISOString();
+  }
 
   useEffect(() => {
     if (exporterStore.hasError(ExportStoreError.DUPLICATE_PATH)) {
@@ -359,26 +384,62 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   onChange={checkText}
                   value={formik.values.insertDate}
                 />
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.creation_date' })}
+                  id="creationDate"
+                  name="creationDate"
+                  type="hidden"
+                  onChange={checkText}
+                  value={formik.values.creationDate}
+                />
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.validation_date' })}
+                  id="validationDate"
+                  name="validationDate"
+                  type="hidden"
+                  onChange={checkText}
+                  value={formik.values.validationDate}
+                />
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.time_begin' })}
+                  id="timeBegin"
+                  name="timeBegin"
+                  type="hidden"
+                  onChange={checkText}
+                  value={formik.values.timeBegin}
+                />
+                <TextField
+                  label={intl.formatMessage({ id: 'ingestion.dialog.field.time_end' })}
+                  id="timeEnd"
+                  name="timeEnd"
+                  type="hidden"
+                  onChange={checkText}
+                  value={formik.values.timeEnd}
+                />
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.creation_date' })}
-                    id="creationDate"
-                    name="creationDate"
-                    type="text"
+                    id="creationDateStr"
+                    name="creationDateStr"
+                    type="datetime-local"
                     onChange={checkDate}
-                    value={formik.values.creationDate}
-                    className={classes.textField}
+                    onInput={setCreationDate}
+                    value={formik.values.creationDateStr}
+                    className={classes.dateField}
+                    pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z"
                   />
                 </Box>
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.validation_date' })}
-                    id="validationDate"
-                    name="validationDate"
-                    type="text"
+                    id="validationDateStr"
+                    name="validationDateStr"
+                    type="datetime-local"
                     onChange={checkDate}
-                    value={formik.values.validationDate}
-                    className={classes.textField}
+                    onInput={setValidationDate}
+                    value={formik.values.validationDateStr}
+                    className={classes.dateField}
+                    pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z"
                   />
                 </Box>
               </Box>
@@ -518,12 +579,14 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.time_begin' })}
-                    id="timeBegin"
-                    name="timeBegin"
-                    type="text"
+                    id="timeBeginStr"
+                    name="timeBeginStr"
+                    type="datetime-local"
                     onChange={checkDate}
-                    value={formik.values.timeBegin}
-                    className={classes.textField}
+                    onInput={setTimeBegin}
+                    value={formik.values.timeBeginStr}
+                    className={classes.dateField}
+                    pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z"
                   />
                 </Box>
               </Box>
@@ -531,12 +594,14 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                 <Box className={classes.textFieldBox}>
                   <TextField
                     label={intl.formatMessage({ id: 'ingestion.dialog.field.time_end' })}
-                    id="timeEnd"
-                    name="timeEnd"
-                    type="text"
+                    id="timeEndStr"
+                    name="timeEndStr"
+                    type="datetime-local"
                     onChange={checkDate}
-                    value={formik.values.timeEnd}
-                    className={classes.textField}
+                    onInput={setTimeEnd}
+                    value={formik.values.timeEndStr}
+                    className={classes.dateField}
+                    pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z"
                   />
                 </Box>
                 <Box className={classes.textFieldBox}>
