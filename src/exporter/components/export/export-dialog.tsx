@@ -104,9 +104,6 @@ const useStyle = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end',
       marginTop: '16px',
       gap: '16px'
-    },
-    noScrollbar: {
-      overflow: 'hidden'
     }
   })
 );
@@ -272,8 +269,8 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
         <DialogTitle className={classes.title}>
           <FormattedMessage id="ingestion.dialog.title" />
         </DialogTitle>
-        <DialogContent className={classes.noScrollbar}>
-          <form onSubmit={formik.handleSubmit} className={classes.form}>
+        <DialogContent className={classes.form}>
+          <form onSubmit={formik.handleSubmit}>
             <Box className={classes.modelPathAndTileset}>
               <Box>
                 <TextField
