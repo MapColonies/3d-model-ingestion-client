@@ -134,7 +134,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
     }, [intl]);
 
     useEffect(() => {
-      const updateRowData = (exportedModels: IExportTaskStatus[]): void => {
+      const updateRowData = (exportJobs: IExportTaskStatus[]): void => {
         if (gridApi) {
           const itemsToUpdate = new Array<IExportTaskStatus>();
           const itemsToAdd = new Array<IExportTaskStatus>();
@@ -143,7 +143,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
           // UPDATE or REMOVE 
           gridApi.forEachNodeAfterFilterAndSort((rowNode) => {
             const data = rowNode.data as IExportTaskStatus;
-            const item = exportedModels.find(
+            const item = exportJobs.find(
               (elem) => elem.id === data.id
             );
             if (item) {
@@ -163,7 +163,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
           });
 
           // ADD not exisitng
-          exportedModels.forEach((elem) => {
+          exportJobs.forEach((elem) => {
             let isFound = false;
             gridApi.forEachNode((rowNode) => {
               const data = rowNode.data as IExportTaskStatus;
@@ -183,9 +183,9 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
         }
       };
 
-      if (!pollingCycle) setRowData(exporterStore.exportedModels);
-      else updateRowData(exporterStore.exportedModels);
-    }, [exporterStore.exportedModels, pollingCycle, gridApi]);
+      if (!pollingCycle) setRowData(exporterStore.exportJobs);
+      else updateRowData(exporterStore.exportJobs);
+    }, [exporterStore.exportJobs, pollingCycle, gridApi]);
 
     useEffect(() => {
       let pollingInterval: NodeJS.Timeout;
@@ -224,7 +224,7 @@ export const ExportStatusDialog: React.FC<ExportStatusDialogProps> = observer(
                 enableRtl={isRtl}
                 rowData={rowData}
                 overlayNoRowsTemplate={intl.formatMessage({
-                  id: 'export-table.nodata',
+                  id: 'ingestion.status.dialog.nodata',
                 })}
                 frameworkComponents={{
                   progressRenderer: ProgressRenderer,

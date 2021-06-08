@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 // eslint-disable-next-line
 import '../../../__mocks__/confEnvShim';
 import MESSAGES from '../../../common/i18n';
-import MOCK_EXPORTED_MODELS from '../../../__mocks-data__/exportedModels';
+import MOCK_EXPORT_JOBS from '../../../__mocks-data__/exportJobs';
 import { updateField } from '../../../common/test-helpers/text-field.helper.spec';
 import { getButtonById } from '../../../common/test-helpers/button.helper.spec';
 import { ExportTaskStatusResponse } from '../../models/exporterStore';
@@ -16,8 +16,8 @@ const setOpenFn = jest.fn();
 const handleExport = jest.fn();
 console.warn = jest.fn();
 
-const exportedModels: ExportTaskStatusResponse = MOCK_EXPORTED_MODELS;
-const jobsFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedModels);
+const exportJobs: ExportTaskStatusResponse = MOCK_EXPORT_JOBS;
+const jobsFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportJobs);
 
 // Enzyme doesn’t work properly with hooks in general, especially for `shallow` so this is the way to mock `react-intl` module.
 // Enspired by https://github.com/formatjs/formatjs/issues/1477
@@ -59,7 +59,7 @@ describe('ExportDialog component', () => {
     });
   });
 
-  it('Initial state of OK button is disabled',  async () => {
+  it('initial state of OK button is disabled',  async () => {
     const mockStore = rootStore.create({}, { fetch: jobsFetcher });
 
     const wrapper = mount(
@@ -80,7 +80,7 @@ describe('ExportDialog component', () => {
     });
   });
   
-  it('When model path, tileset filename and model identifier are defined OK button is enabled', async () => {
+  it('when model path, tileset filename and model identifier are defined OK button is enabled', async () => {
     const exportModelPath = 'test';
     const exportTilesetFilename = 'test';
     const exportIdentifier = 'test';
@@ -112,7 +112,7 @@ describe('ExportDialog component', () => {
     });
   });
 
-  it('When all data filled and FORM submitted, handleExport triggered', async () => {
+  it('when all data filled and FORM submitted, handleExport triggered', async () => {
     const exportModelPath = 'test';
     const exportTilesetFilename = 'test';
     const exportIdentifier = 'test';

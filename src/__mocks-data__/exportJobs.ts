@@ -1,7 +1,7 @@
 import { ExportStatus } from '../exporter/models/exportTaskStatus';
 import { ExportTaskStatusResponse } from '../exporter/models/exporterStore';
 
-const MOCK_EXPORTED_MODELS: ExportTaskStatusResponse = [
+const MOCK_EXPORT_JOBS: ExportTaskStatusResponse = [
   {
     id: '111',
     resourceId: 'resource1',
@@ -30,4 +30,4 @@ const MOCK_EXPORTED_MODELS: ExportTaskStatusResponse = [
   },
 ];
 
-export default MOCK_EXPORTED_MODELS;
+export default MOCK_EXPORT_JOBS;

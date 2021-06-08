@@ -70,7 +70,7 @@ const ExporterView: React.FC = observer(() => {
           openModelIngestion && <ExportDialog
             isOpen={openModelIngestion}
             onSetOpen={setOpenModelIngestion}
-            handleExport={exporterStore.startExportGeoPackage}>
+            handleExport={exporterStore.exportModel}>
           </ExportDialog>
         }
         <Button raised onClick={onStatusClick} style={{ margin: '15px 20px 0 0' }}>

@@ -5,7 +5,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { waitFor } from '@testing-library/react';
 // eslint-disable-next-line
 import '../../../__mocks__/confEnvShim';
-import MOCK_EXPORTED_MODELS from '../../../__mocks-data__/exportedModels';
+import MOCK_EXPORT_JOBS from '../../../__mocks-data__/exportJobs';
 import MESSAGES from '../../../common/i18n';
 import { rootStore, StoreProvider } from '../../models/rootStore';
 import { ExportTaskStatusResponse } from '../../models/exporterStore';
@@ -13,8 +13,8 @@ import { ExportStatusDialog } from './export-status-dialog';
 
 const setOpenFn = jest.fn();
 
-const exportedModels: ExportTaskStatusResponse = MOCK_EXPORTED_MODELS;
-const jobsFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedModels);
+const exportJobs: ExportTaskStatusResponse = MOCK_EXPORT_JOBS;
+const jobsFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportJobs);
 
 describe('ExportStatusTable component', () => {
   it('renders correctly', async () => {
@@ -33,7 +33,7 @@ describe('ExportStatusTable component', () => {
     wrapper.update();
 
     await waitFor(() => {
-      return mockStore.exporterStore.exportedModels !== [];
+      return mockStore.exporterStore.exportJobs !== [];
     });
 
     await waitFor(() => {
@@ -59,7 +59,7 @@ describe('ExportStatusTable component', () => {
     wrapper.update(); 
 
     await waitFor(() => {
-      return mockStore.exporterStore.exportedModels !== [];
+      return mockStore.exporterStore.exportJobs !== [];
     });
   
     await waitFor(() => {
@@ -69,7 +69,7 @@ describe('ExportStatusTable component', () => {
   });
 
   
-  it('fetched mock data propregated to aggrid rowdata ', async () => {
+  it('fetched mock data propagated to aggrid rowdata ', async () => {
     const mockStore = rootStore.create({}, { fetch: jobsFetcher });
         
     const wrapper = mount(
@@ -84,14 +84,14 @@ describe('ExportStatusTable component', () => {
     );
 
     await waitFor(() => {
-      return mockStore.exporterStore.exportedModels !== [];
+      return mockStore.exporterStore.exportJobs !== [];
     });
 
     wrapper.update();
 
     await waitFor(() => {
       const aggrid = wrapper.find(AgGridReact);
-      expect(aggrid.props().rowData).toBe(exportedModels);
+      expect(aggrid.props().rowData).toBe(exportJobs);
     });
   });
 });

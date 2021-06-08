@@ -15,7 +15,6 @@ export const baseRootStore = types
   .model({
     exporterStore: types.optional(exporterStore, {
       state: ResponseState.IDLE,
-      searchParams: {},
       errors: [],
     }),
   })

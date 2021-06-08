@@ -5,7 +5,6 @@ import { ApiHttpResponse } from '../../common/models/api-response';
 import { ResponseState } from '../../common/models/ResponseState';
 import { ExportStoreError } from '../../common/models/exportStoreError';
 import EXPORTER_CONFIG from '../../common/config';
-import { searchParams } from './search-params';
 import { IRootStore } from './rootStore';
 import { IExportTaskStatus } from './exportTaskStatus';
 
@@ -68,9 +67,8 @@ export const exporterStore = types
       'State',
       Object.values(ResponseState)
     ),
-    searchParams: types.optional(searchParams, {}),
     // eslint-disable-next-line
-    exportedModels: types.maybe(types.frozen<any>([])),
+    exportJobs: types.maybe(types.frozen<any>([])),
     errors: types.frozen<IInternalError[]>([]),
   })
   .views((self) => ({
@@ -79,9 +77,9 @@ export const exporterStore = types
     },
   }))
   .actions((self) => {
-    const startExportGeoPackage: (
+    const exportModel: (
       modelInfo: ModelInfo
-    ) => Promise<void> = flow(function* startExportGeoPackage(
+    ) => Promise<void> = flow(function* exportModel(
       modelInfo: ModelInfo
     ): Generator<Promise<ExporterResponse>, void, ExporterResponse> {
       self.state = ResponseState.PENDING;
@@ -136,8 +134,8 @@ export const exporterStore = types
             'GET',
             {}
           );
-          // const result = yield Promise.resolve(MOCK_EXPORTED_MODELS);
-          self.exportedModels = result;
+          // const result = yield Promise.resolve(MOCK_EXPORT_JOBS);
+          self.exportJobs = result;
         } catch (e) {
           const error = e as AxiosError;
           self.state = ResponseState.ERROR;
@@ -175,7 +173,7 @@ export const exporterStore = types
     };
 
     return {
-      startExportGeoPackage,
+      exportModel,
       getJobs,
       addError,
       hasError,
