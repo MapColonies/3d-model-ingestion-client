@@ -17,7 +17,7 @@ const handleExport = jest.fn();
 console.warn = jest.fn();
 
 const exportedModels: ExportTaskStatusResponse = MOCK_EXPORTED_MODELS;
-const packagesFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedModels);
+const jobsFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedModels);
 
 // Enzyme doesn’t work properly with hooks in general, especially for `shallow` so this is the way to mock `react-intl` module.
 // Enspired by https://github.com/formatjs/formatjs/issues/1477
@@ -37,12 +37,10 @@ jest.mock('react-intl', () => {
   /* eslint-enable */
 });
 
-jest.mock('../../../common/helpers/estimated-tile-list');
-
 describe('ExportDialog component', () => {
   it('renders correctly', async () => {
 
-    const mockStore = rootStore.create({}, { fetch: packagesFetcher });
+    const mockStore = rootStore.create({}, { fetch: jobsFetcher });
 
     const wrapper = mount(
       <StoreProvider value={mockStore}>
@@ -61,8 +59,8 @@ describe('ExportDialog component', () => {
     });
   });
 
-  it('Initial state of Ok button is disabled',  async () => {
-    const mockStore = rootStore.create({}, { fetch: packagesFetcher });
+  it('Initial state of OK button is disabled',  async () => {
+    const mockStore = rootStore.create({}, { fetch: jobsFetcher });
 
     const wrapper = mount(
       <StoreProvider value={mockStore}>
@@ -82,11 +80,11 @@ describe('ExportDialog component', () => {
     });
   });
   
-  it('When package name and directory name are defined Ok button is enabled and download link properly generated', async () => {
+  it('When model path, tileset filename and model identifier are defined OK button is enabled', async () => {
     const exportModelPath = 'test';
     const exportTilesetFilename = 'test';
     const exportIdentifier = 'test';
-    const mockStore = rootStore.create({}, { fetch: packagesFetcher });
+    const mockStore = rootStore.create({}, { fetch: jobsFetcher });
 
     const wrapper = mount(
       <StoreProvider value={mockStore}>
@@ -118,7 +116,7 @@ describe('ExportDialog component', () => {
     const exportModelPath = 'test';
     const exportTilesetFilename = 'test';
     const exportIdentifier = 'test';
-    const mockStore = rootStore.create({}, { fetch: packagesFetcher });
+    const mockStore = rootStore.create({}, { fetch: jobsFetcher });
 
     const wrapper = mount(
       <StoreProvider value={mockStore}>

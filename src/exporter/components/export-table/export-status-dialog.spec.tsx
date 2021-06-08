@@ -14,11 +14,11 @@ import { ExportStatusDialog } from './export-status-dialog';
 const setOpenFn = jest.fn();
 
 const exportedModels: ExportTaskStatusResponse = MOCK_EXPORTED_MODELS;
-const packagesFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedModels);
+const jobsFetcher = async (): Promise<ExportTaskStatusResponse> => Promise.resolve<ExportTaskStatusResponse>(exportedModels);
 
 describe('ExportStatusTable component', () => {
   it('renders correctly', async () => {
-    const mockStore = rootStore.create({}, { fetch: packagesFetcher });
+    const mockStore = rootStore.create({}, { fetch: jobsFetcher });
     const wrapper = mount(
       <StoreProvider value={mockStore}>
         <IntlProvider locale={'en'} messages={MESSAGES['en']}>
@@ -41,8 +41,8 @@ describe('ExportStatusTable component', () => {
     });
   });
 
-  it('exported packages fetched during component lifecycle', async () => {
-    const mockStore = rootStore.create({}, { fetch: packagesFetcher });
+  it('export jobs fetched during component lifecycle', async () => {
+    const mockStore = rootStore.create({}, { fetch: jobsFetcher });
     const getJobsMock = jest.spyOn(mockStore.exporterStore, "getJobs");
         
     const wrapper = mount(
@@ -70,7 +70,7 @@ describe('ExportStatusTable component', () => {
 
   
   it('fetched mock data propregated to aggrid rowdata ', async () => {
-    const mockStore = rootStore.create({}, { fetch: packagesFetcher });
+    const mockStore = rootStore.create({}, { fetch: jobsFetcher });
         
     const wrapper = mount(
       <StoreProvider value={mockStore}>
