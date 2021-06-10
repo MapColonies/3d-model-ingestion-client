@@ -17,12 +17,12 @@ done
 if [ $ENTERYPOINT -eq 1 ]; then
     docker run --rm -it \
         --entrypoint /bin/sh \
-        -p 3000:80 \
+        -p 3000:8080 \
         --name ingestionclientcontainer \
         ingestionclient:v1
 else
     docker run -d --rm \
-        -p 3000:80 \
+        -p 3000:8080 \
         --name ingestionclientcontainer \
         ingestionclient:v1
 fi
