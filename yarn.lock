@@ -2587,14 +2587,6 @@
   resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-7.2.1.tgz#2ad4e844175a3738cb9e7064be5ea070b8863a1c"
   integrity sha512-oZ0Ib5I4Z2pUEcoo95cT1cr6slco9WY7yiPpG+RGNkj8YcYgJnM7pXmYmorNOReh8MIGcKSqXyeGjxnr8YiZbA==
 
-"@turf/area@^6.0.1":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@turf/area/-/area-6.3.0.tgz#cdd02f8ca51da2889dfc90a3c9e8fef5d1e04dca"
-  integrity sha512-Y1cYyAQ2fk94npdgOeMF4msc2uabHY1m7A7ntixf1I8rkyDd6/iHh1IMy1QsM+VZXAEwDwsXhu+ZFYd3Jkeg4A==
-  dependencies:
-    "@turf/helpers" "^6.3.0"
-    "@turf/meta" "^6.3.0"
-
 "@turf/bbox-polygon@^6.0.1":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@turf/bbox-polygon/-/bbox-polygon-6.3.0.tgz#9ffa79d56ae50cc7730b35b2a6d2a02493268365"
@@ -2618,14 +2610,6 @@
     "@turf/helpers" "^5.1.5"
     "@turf/invariant" "^5.1.5"
 
-"@turf/boolean-point-in-polygon@^6.0.1":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@turf/boolean-point-in-polygon/-/boolean-point-in-polygon-6.3.0.tgz#784952a36c64119e90fbe94650245da62ecd8fc2"
-  integrity sha512-NqFSsoE6OwhDK19IllDQRhEQEkF7UVEOlqH9vgS1fGg4T6NcyKvACJs05c9457tL7QSbV9ZS53f2qiLneFL+qg==
-  dependencies:
-    "@turf/helpers" "^6.3.0"
-    "@turf/invariant" "^6.3.0"
-
 "@turf/clone@^5.1.5":
   version "5.1.5"
   resolved "https://registry.yarnpkg.com/@turf/clone/-/clone-5.1.5.tgz#253e8d35477181976e33adfab50a0f02a7f0e367"
@@ -2633,32 +2617,15 @@
   dependencies:
     "@turf/helpers" "^5.1.5"
 
-"@turf/distance@6.2.0-alpha.2":
-  version "6.2.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@turf/distance/-/distance-6.2.0-alpha.2.tgz#b62b25cf5145dd4233ce5bd5e061c8513faefb9c"
-  integrity sha512-gfCN8b3il37KTplYxcxh2jv+kDt47rPD7QtDMK4yjxFaK/9Zqdc+rUVMVOC/nhO4cvIa+zS3d+CT2ncEIfWWGA==
-  dependencies:
-    "@turf/helpers" "^6.2.0-alpha.2"
-    "@turf/invariant" "^6.2.0-alpha.2"
-
 "@turf/helpers@^5.1.5":
   version "5.1.5"
   resolved "https://registry.yarnpkg.com/@turf/helpers/-/helpers-5.1.5.tgz#153405227ab933d004a5bb9641a9ed999fcbe0cf"
   integrity sha1-FTQFInq5M9AEpbuWQantmZ/L4M8=
 
-"@turf/helpers@^6.1.4", "@turf/helpers@^6.2.0-alpha.2", "@turf/helpers@^6.3.0":
+"@turf/helpers@^6.1.4", "@turf/helpers@^6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@turf/helpers/-/helpers-6.3.0.tgz#87f90f806c3f8ad6385ef8d2041d3662bf3c9fb1"
   integrity sha512-kr6KuD4Z0GZ30tblTEvi90rvvVNlKieXuMC8CTzE/rVQb0/f/Cb29zCXxTD7giQTEQY/P2nRW23wEqqyNHulCg==
-
-"@turf/intersect@6.2.0-alpha.2":
-  version "6.2.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@turf/intersect/-/intersect-6.2.0-alpha.2.tgz#58a772c46976813e8d599acc6bb668d0f482143e"
-  integrity sha512-zynyjFJBRmV4NbiA7if81CpEeA4OIO+Q5OU3kJY2wcgluw6Adm+Yn54FEtMlaTxUgx/xUgazdsmS8Y41SsGvCg==
-  dependencies:
-    "@turf/helpers" "^6.2.0-alpha.2"
-    "@turf/invariant" "^6.2.0-alpha.2"
-    polygon-clipping "^0.14.3"
 
 "@turf/invariant@^5.1.5":
   version "5.2.0"
@@ -2666,13 +2633,6 @@
   integrity sha1-8BUP9ykLOFd7c9CIt5MsHuCqkKc=
   dependencies:
     "@turf/helpers" "^5.1.5"
-
-"@turf/invariant@^6.2.0-alpha.2", "@turf/invariant@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@turf/invariant/-/invariant-6.3.0.tgz#04a22b26c5503146c03fa6198176b72bd591eadf"
-  integrity sha512-2OFOi9p+QOrcIMySEnr+WlOiKaFZ1bY56jA98YyECewJHfhPFWUBZEhc4nWGRT0ahK08Vus9+gcuBX8QIpCIIw==
-  dependencies:
-    "@turf/helpers" "^6.3.0"
 
 "@turf/meta@^5.1.5":
   version "5.2.0"
@@ -11453,13 +11413,6 @@ pnp-webpack-plugin@1.6.4:
   dependencies:
     ts-pnp "^1.1.6"
 
-polygon-clipping@^0.14.3:
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/polygon-clipping/-/polygon-clipping-0.14.3.tgz#02affe4e2aaee69f686ea9dcd5f9566dd4c941af"
-  integrity sha512-bIaMFYIsHOShMN0JZsvkfk66S7gKMQMlYUpV7LIx+WOBYvJT09eCgoAv2JCDNj6SofA4+o5tlmV76zzUiG4aBQ==
-  dependencies:
-    splaytree "^3.0.1"
-
 popper.js@1.16.1-lts:
   version "1.16.1-lts"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1-lts.tgz#cf6847b807da3799d80ee3d6d2f90df8a3f50b05"
@@ -13866,11 +13819,6 @@ spdy@^4.0.1:
     http-deceiver "^1.2.7"
     select-hose "^2.0.0"
     spdy-transport "^3.0.0"
-
-splaytree@^3.0.1:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/splaytree/-/splaytree-3.1.0.tgz#17d4a0108a6da3627579690b7b847241e18ddec8"
-  integrity sha512-gvUGR7xnOy0fLKTCxDeUZYgU/I1Tdf8M/lM1Qrf8L2TIOR5ipZjGk02uYcdv0o2x7WjVRgpm3iS2clLyuVAt0Q==
 
 split-string@^3.0.1, split-string@^3.0.2:
   version "3.1.0"
