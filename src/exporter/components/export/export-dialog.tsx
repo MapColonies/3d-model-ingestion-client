@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Dialog, DialogTitle, DialogContent, TextField, Button } from '@map-colonies/react-core';
@@ -6,7 +6,6 @@ import { Box } from '@map-colonies/react-components';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { observer } from 'mobx-react-lite';
 import { ModelInfo } from '../../models/exporterStore';
-import { ExportStoreError } from '../../../common/models/exportStoreError';
 import { useStore } from '../../models/rootStore';
 import { NotchLabel } from './notch-label';
 
@@ -246,7 +245,6 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   });
 
   const [formErrors, setFormErrors] = useState({ geometryFormat: '' });
-  const [serverErrors, setServerErrors] = useState({ duplicate: '' });
 
   const handleClose = (isOpened: boolean): void => {
     onSetOpen(isOpened);
@@ -280,13 +278,6 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
   const setTimeEnd = (): void => {
     formik.values.timeEnd = new Date(formik.values.timeEndStr).toISOString();
   }
-
-  useEffect(() => {
-    if (exporterStore.hasError(ExportStoreError.DUPLICATE_PATH)) {
-      setServerErrors({ ...serverErrors, duplicate: 'export.dialog.duplicate-path.text' });
-      exporterStore.cleanError(ExportStoreError.DUPLICATE_PATH);
-    }
-  }, [exporterStore, exporterStore.errors, serverErrors]);
 
   return (
     <Box id="ingestionDialog">
@@ -697,24 +688,13 @@ export const ExportDialog: React.FC<ExportDialogProps> = observer((props) => {
                   />
                 </Box>
               </Box>
-
-              {
-                Object.entries(serverErrors).map(([error, value], index) => {
-                  return value ?
-                  <div key={index} className={classes.errorContainer}>
-                    {`${intl.formatMessage({ id: 'general.error.label' })}: ${intl.formatMessage({ id: value })}`}
-                  </div> :
-                  null
-                })
-              }
-
             </Box>
             
             <Box className={classes.buttons}>
               <Button type="button" onClick={(): void => { handleClose(false); }}>
                 <FormattedMessage id="general.cancel-btn.text" />
               </Button>
-              <Button raised type="submit" disabled={!!formErrors.geometryFormat || !!serverErrors.duplicate || 
+              <Button raised type="submit" disabled={!!formErrors.geometryFormat ||
                 !formik.values.modelPath ||
                 !formik.values.tilesetFilename ||
                 !formik.values.identifier}>

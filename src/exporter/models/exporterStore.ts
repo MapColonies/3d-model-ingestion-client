@@ -92,8 +92,8 @@ export const exporterStore = types
 
       try {
         /*const result = */yield self.root.fetch(
-          EXPORTER_CONFIG.MODELS_BASE_URL,
-          EXPORTER_CONFIG.MODELS_URL,
+          EXPORTER_CONFIG.MODEL_SERVICE_URL,
+          EXPORTER_CONFIG.MODEL_SERVICE_NAME,
           'POST',
           params
         );
@@ -129,8 +129,8 @@ export const exporterStore = types
         try {
           self.state = ResponseState.IDLE;
           const result = yield self.root.fetch(
-            EXPORTER_CONFIG.JOBS_BASE_URL,
-            EXPORTER_CONFIG.JOBS_URL,
+            EXPORTER_CONFIG.JOB_SERVICE_URL,
+            EXPORTER_CONFIG.JOB_SERVICE_NAME,
             'GET',
             {}
           );
