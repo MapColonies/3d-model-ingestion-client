@@ -1,0 +1,16 @@
+window._env_ = {
+  LANGUAGE: '{{ getv "/configuration/ui/language" "en" }}',
+  MODEL_SERVICE_URL: '{{ getv "/configuration/model/service/url" "http://localhost:8082" }}',
+  MODEL_SERVICE_NAME: '{{ getv "/configuration/model/service/name" "/models" }}',
+  JOB_SERVICE_URL: '{{ getv "/configuration/job/service/url" "http://localhost:8081" }}',
+  JOB_SERVICE_NAME: '{{ getv "/configuration/job/service/name" "/jobs" }}',
+  LOGGER: {
+    level: '{{ getv "/configuration/logger/level" "warn" }}',
+    log2console: {{ getv "/configuration/logger/log2console" "false" }},
+    log2httpServer: {
+      host: '{{ getv "/configuration/logger/http/host" "" }}',
+      port: '{{ getv "/configuration/logger/http/port" "" }}',
+      path: '{{ getv "/configuration/logger/http/path" "" }}'
+    }
+  }
+};

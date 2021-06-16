@@ -1,0 +1,3 @@
+#ingestionDialog .mdc-dialog__surface{
+  max-width: unset;
+}

@@ -1,0 +1,15 @@
+[template]
+src = "production.tmpl"
+dest = "public/env-config.js"
+keys = [
+  "/configuration/ui/language",
+  "/configuration/model/service/url",
+  "/configuration/model/service/name",
+  "/configuration/job/service/url",
+  "/configuration/job/service/name",
+  "/configuration/logger/http/host",
+  "/configuration/logger/http/port",
+  "/configuration/logger/http/path",
+  "/configuration/logger/level",
+  "/configuration/logger/log2console"
+]

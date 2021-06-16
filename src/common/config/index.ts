@@ -1,0 +1,21 @@
+/* eslint-disable */
+const LANGUAGE = (window as any)._env_.LANGUAGE;
+const MODEL_SERVICE_URL = (window as any)._env_.MODEL_SERVICE_URL;
+const MODEL_SERVICE_NAME = (window as any)._env_.MODEL_SERVICE_NAME;
+const JOB_SERVICE_URL = (window as any)._env_.JOB_SERVICE_URL;
+const JOB_SERVICE_NAME = (window as any)._env_.JOB_SERVICE_NAME;
+
+const EXPORTER_CONFIG = {
+  MODEL_SERVICE_URL: MODEL_SERVICE_URL,
+  MODEL_SERVICE_NAME: MODEL_SERVICE_NAME,
+  JOB_SERVICE_URL: JOB_SERVICE_URL,
+  JOB_SERVICE_NAME: JOB_SERVICE_NAME,
+  I18N: {
+    DEFAULT_LANGUAGE: LANGUAGE,
+  },
+  EXPORT: {
+    POLLING_CYCLE_INTERVAL: 3000,
+  },
+};
+
+export default EXPORTER_CONFIG;
