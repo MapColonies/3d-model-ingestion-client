@@ -19,10 +19,10 @@ if [ $ENTERYPOINT -eq 1 ]; then
         --entrypoint /bin/sh \
         -p 3000:8080 \
         --name ingestionclientcontainer \
-        ingestionclient:v1
+        ingestionclient:latest
 else
     docker run -d --rm \
         -p 3000:8080 \
         --name ingestionclientcontainer \
-        ingestionclient:v1
+        ingestionclient:latest
 fi

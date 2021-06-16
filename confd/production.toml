@@ -3,8 +3,6 @@ src = "production.tmpl"
 dest = "public/env-config.js"
 keys = [
   "/configuration/ui/language",
-  "/configuration/service/protocol",
-  "/configuration/service/url",
   "/configuration/model/service/url",
   "/configuration/model/service/name",
   "/configuration/job/service/url",

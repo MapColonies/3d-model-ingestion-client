@@ -1,15 +1,11 @@
 /* eslint-disable */
 const LANGUAGE = (window as any)._env_.LANGUAGE;
-const SERVICE_PROTOCOL = (window as any)._env_.SERVICE_PROTOCOL;
-const SERVICE_NAME = (window as any)._env_.SERVICE_NAME;
 const MODEL_SERVICE_URL = (window as any)._env_.MODEL_SERVICE_URL;
 const MODEL_SERVICE_NAME = (window as any)._env_.MODEL_SERVICE_NAME;
 const JOB_SERVICE_URL = (window as any)._env_.JOB_SERVICE_URL;
 const JOB_SERVICE_NAME = (window as any)._env_.JOB_SERVICE_NAME;
 
 const EXPORTER_CONFIG = {
-  SERVICE_PROTOCOL: SERVICE_PROTOCOL,
-  SERVICE_NAME: SERVICE_NAME,
   MODEL_SERVICE_URL: MODEL_SERVICE_URL,
   MODEL_SERVICE_NAME: MODEL_SERVICE_NAME,
   JOB_SERVICE_URL: JOB_SERVICE_URL,

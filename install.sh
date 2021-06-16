@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build --rm -t ingestionclient:v1 -f Dockerfile .
+docker build --rm -t ingestionclient:latest -f Dockerfile .
