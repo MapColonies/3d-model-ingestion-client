@@ -1,19 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata:
-  name: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
+metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
+  name: {{ $fullname }}
+  labels:
+    app: {{ $fullname }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      podName: {{ .Release.Name }}-{{ .Chart.Name }}-pod 
+      app: {{ $fullname }}
+  replicas: {{ default 1 .Values.replicaCount | int }}
   template:
     metadata:
       labels:
-        podName: {{ .Release.Name }}-{{ .Chart.Name }}-pod
+        app: {{ $fullname }}
     spec:
       containers:
-      - name: {{ .Release.Name }}-{{ .Chart.Name }}-container
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image }}"
+        imagePullPolicy: IfNotPresent
         env:
         - name: CONFIGURATION_UI_LANGUAGE
           value: {{ tpl .Values.language . | quote | default "en" }}
@@ -25,7 +31,13 @@ spec:
           value: {{ tpl .Values.jobServiceUrl . | quote }}
         - name: CONFIGURATION_JOB_SERVICE_NAME
           value: {{ tpl .Values.jobServiceName . | quote }}
-        image: {{ .Values.image }}
-        imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: {{ .Values.port }}
+        - containerPort: {{ .Values.service.internalPort | int }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.internalPort | int }}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.internalPort | int }}
