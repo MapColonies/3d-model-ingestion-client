@@ -1,0 +1,19 @@
+{{- if .Values.route.enabled -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
+  name: {{ $fullname }}
+  labels:
+    app: {{ $fullname }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+  annotations:
+    {{- range $key, $value := .Values.route.annotations }}
+      {{ $key }}: {{ tpl $value $ | quote }}
+    {{- end }}
+spec:
+  to:
+    kind: Service
+    name: {{ $.Release.Name }}-{{ .Chart.Name }}-service
+{{- end -}}
