@@ -3,6 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger: none
+pr: none
 # can replace the git hub action build and push trigger
   # tags:
   #   include:
