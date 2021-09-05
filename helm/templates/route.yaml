@@ -15,5 +15,5 @@ metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | 
 spec:
   to:
     kind: Service
-    name: {{ $.Release.Name }}-{{ .Chart.Name }}-service
+    name: {{ $.Release.Name }}-{{ .Chart.Name }}
 {{- end -}}

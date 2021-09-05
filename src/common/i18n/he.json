@@ -13,6 +13,7 @@
   "ingestion.dialog.title": "העלאת מודל תלת-מימד",
   "ingestion.dialog.metadata": "מידע אודות המודל",
   "ingestion.dialog.form-error.invalid.geometry": "גיאומטריה לא תקינה",
+  "ingestion.dialog.form-error.invalid.required": "שדה חובה",
 
   "ingestion.dialog.field.model_path": "נתיב לקבצי המודל (נתיב מלא) *",
   "ingestion.dialog.field.tileset_filename": "שם הקובץ הראשי של המודל *",
